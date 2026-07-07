@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#080B10">
 <link rel="icon" type="image/png" href="apple-touch-icon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<title>Innovación Blue Sky</title>
+<title>IBS</title>
 <meta name="description" content="IBS ofrece soluciones de movilidad eléctrica para flotas de última milla: menor costo operativo, cero emisiones y control inteligente.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -28,9 +28,12 @@
     --text-mute:#5A6472;
     --text-invert:#EDF1F5;
     --text-invert-mute:#9AA6B4;
-    --accent:#1F6BFF;
-    --accent-bright:#4F97FF;
-    --accent-sky:#8FC4FF;
+    --accent:#0FB2C2;
+    --accent-bright:#20C6D6;
+    --accent-sky:#9BE4EC;
+    --sh:#E11D2A;
+    --sh-bright:#F5333F;
+    --sh-sky:#FBB4B9;
     --shadow-veh:drop-shadow(0 34px 30px rgba(8,14,24,.28));
     --ease:cubic-bezier(.22,.61,.36,1);
     --maxw:1240px;
@@ -82,8 +85,8 @@
 
   /* ============ HERO ============ */
   .hero{position:relative;padding:150px 0 40px;overflow:hidden;background:
-     radial-gradient(120% 90% at 82% 8%,rgba(31,107,255,.10),transparent 46%),
-     radial-gradient(100% 80% at 8% 100%,rgba(143,196,255,.16),transparent 50%),
+     radial-gradient(120% 90% at 82% 8%,rgba(15,178,194,.12),transparent 46%),
+     radial-gradient(100% 80% at 8% 100%,rgba(155,228,236,.18),transparent 50%),
      linear-gradient(180deg,#F7F9FB 0%,#EDF1F5 100%)}
   .hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
   .hero h1{margin:22px 0 26px}
@@ -111,6 +114,27 @@
   .band-dark{background:var(--ink);color:var(--text-invert)}
   .band-dark .section-title,.band-dark h3{color:#fff}
   .band-dark .lede{color:var(--text-invert-mute)}
+
+  /* ============ BRAND SCOPES ============ */
+  .btn-primary:hover{background:#0C93A0;box-shadow:0 10px 30px rgba(15,178,194,.32)}
+  .btn-sh{background:var(--sh);color:#fff}
+  .btn-sh:hover{background:#C21622;box-shadow:0 10px 30px rgba(225,29,42,.35)}
+  .band-sh{--accent:var(--sh);--accent-bright:var(--sh-bright);--accent-sky:var(--sh-sky);background:linear-gradient(180deg,#FFFFFF,#FBF1F1)}
+  .tag.ice{color:var(--text-mute)}
+  .tag.ice::before{background:var(--graphite-2);box-shadow:0 0 0 3px rgba(138,147,161,.18)}
+  /* brand selector */
+  .worlds{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .world{position:relative;overflow:hidden;border-radius:24px;padding:clamp(28px,4vw,44px);min-height:230px;display:flex;flex-direction:column;justify-content:flex-end;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+  .world:hover{transform:translateY(-6px);box-shadow:0 30px 60px rgba(8,14,24,.20)}
+  .world .wtag{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+  .world h3{font-family:"Archivo",sans-serif;font-size:clamp(26px,3.2vw,38px);font-weight:900;letter-spacing:-.02em;margin:10px 0 8px;color:#fff}
+  .world p{font-size:15px;line-height:1.55;max-width:42ch;margin-bottom:18px;color:rgba(255,255,255,.72)}
+  .world .go{font-family:"Archivo",sans-serif;font-weight:700;font-size:14px;display:inline-flex;gap:8px;align-items:center}
+  .world.sh{background:radial-gradient(120% 120% at 80% 0%,rgba(225,29,42,.22),transparent 55%),#171012}
+  .world.sh .wtag,.world.sh .go{color:var(--sh-bright)}
+  .world.ev{background:radial-gradient(120% 120% at 80% 0%,rgba(15,178,194,.24),transparent 55%),#0B1418}
+  .world.ev .wtag,.world.ev .go{color:var(--accent-bright)}
+  @media(max-width:760px){.worlds{grid-template-columns:1fr}}
   .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:clamp(38px,5vw,64px)}
   .sec-head .l{max-width:60ch}
   .sec-head h2{margin-top:18px}
@@ -190,8 +214,8 @@
   .tech-cell .ico{position:absolute;top:clamp(30px,4vw,48px);right:clamp(30px,4vw,48px);width:26px;height:26px;color:var(--accent);opacity:.85}
 
   /* ============ CTA ============ */
-  .cta{background:radial-gradient(120% 120% at 50% 0%,#123A8C 0%,#0B1B3C 42%,#080B10 100%);color:#fff;border-radius:clamp(24px,3vw,34px);padding:clamp(50px,8vw,100px) clamp(30px,6vw,90px);text-align:center;position:relative;overflow:hidden}
-  .cta::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:80%;height:80%;background:radial-gradient(circle,rgba(79,151,255,.28),transparent 60%)}
+  .cta{background:radial-gradient(120% 120% at 50% 0%,#0F3540 0%,#0B1B22 42%,#080B10 100%);color:#fff;border-radius:clamp(24px,3vw,34px);padding:clamp(50px,8vw,100px) clamp(30px,6vw,90px);text-align:center;position:relative;overflow:hidden}
+  .cta::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:80%;height:80%;background:radial-gradient(circle,rgba(15,178,194,.28),transparent 60%)}
   .cta-inner{position:relative;z-index:2}
   .cta h2{font-size:clamp(34px,6vw,72px);font-weight:900;letter-spacing:-.03em;line-height:.98}
   .cta p{color:#B8C6DC;font-size:clamp(15px,1.5vw,19px);max-width:52ch;margin:24px auto 36px}
@@ -243,10 +267,10 @@
   <div class="wrap nav">
     <a href="#top" class="brand"><span class="dot"></span>IBS</a>
     <nav class="nav-links">
-      <a href="#flota">Flotilla</a>
-      <a href="#specs">Especificaciones</a>
+      <a href="#shineray">Shineray</a>
+      <a href="#electricos">Eléctricos</a>
       <a href="#cobertura">Cobertura</a>
-      <a href="#tecnologia">Tecnología</a>
+      <a href="#contacto">Contacto</a>
     </nav>
     <div class="nav-cta">
       <a href="#contacto" class="btn btn-primary">Cotizar <span class="ar">→</span></a>
@@ -256,10 +280,10 @@
 </header>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#flota">Flota</a>
-  <a href="#specs">Especificaciones</a>
+  <a href="#shineray">Shineray</a>
+  <a href="#electricos">Eléctricos</a>
   <a href="#cobertura">Cobertura</a>
-  <a href="#tecnologia">Tecnología</a>
+  <a href="#contacto">Contacto</a>
   <a href="#contacto" class="btn btn-primary">Cotizar →</a>
 </div>
 
@@ -268,13 +292,12 @@
   <div class="wrap">
     <div class="hero-grid">
       <div style="max-width:900px">
-        <span class="eyebrow reveal">Vehículos de Última millA</span>
-        <h1 class="display reveal">Movilidad sin<br>emisiones.<br><span style="color:var(--graphite)">Sin límites.</span></h1>
-        <p class="lede reveal">Vehículos eléctricos de alta eficiencia diseñados para operaciones de última milla. Reduce costos, elimina emisiones y escala tu flota con control total.</p>
+        <span class="eyebrow reveal">Distribuidor oficial · Occidente de México</span>
+        <h1 class="display reveal">Los vehículos<br>que mueven<br><span style="color:var(--graphite)">tu negocio.</span></h1>
+        <p class="lede reveal">IBS distribuye vehículos de última milla de la marca Shineray junto con unidades 100% eléctricas en las zonas de Tepic, Vallarta y Guadalajara. Dos opciones una sola flota para tu operación.</p>
         <div class="hero-actions reveal">
-          <a href="#flota" class="btn btn-primary">Ver flota <span class="ar">→</span></a>
-          <a href="#contacto" class="btn btn-ghost">Contactar  Asesor
-</a>
+          <a href="#shineray" class="btn btn-sh">Ver Shineray <span class="ar">→</span></a>
+          <a href="#electricos" class="btn btn-ghost">Ver Eléctricos</a>
         </div>
       </div>
     </div>
@@ -285,35 +308,195 @@
       <div class="hero-floor"></div>
       <img class="hero-veh" src="assets/maxence.png" alt="IBS Maxence — vehículo eléctrico pesado">
       <div class="badge-float">
-        <div class="k">Flagship</div>
-        <div class="v">Maxence</div>
+        <div class="k">Cobertura</div>
+        <div class="v">Tepic, Vallarta 
+y Guadalajara</div>
       </div>
     </div>
 
     <div class="stats">
       <div class="stat reveal">
-        <div class="n">0<small>g</small></div>
-        <div class="l">CO₂ por kilómetro</div>
+        <div class="n">2</div>
+        <div class="l">Marcas distribuidas</div>
       </div>
       <div class="stat reveal">
-        <div class="n">270<small>km</small></div>
-        <div class="l">Autonomía máxima</div>
+        <div class="n">3</div>
+        <div class="l">Ciudades</div>
       </div>
       <div class="stat reveal">
-        <div class="n">1,550<small>kg</small></div>
-        <div class="l">Carga útil máxima</div>
+        <div class="n">9<small>+</small></div>
+        <div class="l">Modelos disponibles</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FLEET -->
-<section class="band band-paper3" id="flota">
+<!-- BRAND SELECTOR -->
+<section class="band band-light" id="marcas" style="padding-bottom:0">
   <div class="wrap">
     <div class="sec-head">
       <div class="l reveal">
-        <span class="eyebrow">Catálogo 2026</span>
-        <h2 class="section-title">Nuestra flota</h2>
+        <span class="eyebrow">Dos marcas · Una flota</span>
+        <h2 class="section-title">Elige tu línea</h2>
+      </div>
+      <p class="lede reveal">IBS es tu distribuidor: vehículos comerciales de combustión Shineray y unidades 100% eléctricas para última milla. 
+Elige el mundo que mueve tu operación.</p>
+    </div>
+    <div class="worlds reveal">
+      <a class="world sh" href="#shineray">
+        <span class="wtag">Shineray · Comercial</span>
+        <h3>Última milla a combustión</h3>
+        <p>5 modelos de combustión con potencia y capacidad para el trabajo diario.</p>
+        <span class="go">Ver Vehículos Shineray →</span>
+      </a>
+      <a class="world ev" href="#electricos">
+        <span class="wtag">Eléctricos · Cero emisiones</span>
+        <h3>Última milla eléctrica</h3>
+        <p>4 plataformas eléctricas, de ligero a pesado. Menor costo operativo y cero emisiones.</p>
+        <span class="go">Ver Vehículos Eléctricos →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SHINERAY -->
+<section class="band band-sh" id="shineray">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="l reveal">
+        <span class="eyebrow">Shineray · Vehículos comerciales</span>
+        <h2 class="section-title">La fuerza<br>Shineray</h2>
+      </div>
+      <p class="lede reveal">Distribución oficial para Tepic, Vallarta y Guadalajara. 
+Trucks, minitrucks, cargo van y SUV de combustión.</p>
+    </div>
+
+    <div class="fleet-grid">
+      <!-- T50 -->
+      <article class="veh-card reveal">
+        <div class="veh-top">
+          <div>
+            <div class="veh-name">T50</div>
+            <div class="veh-class">Truck · Combustión 1.6 L</div>
+          </div>
+          <span class="tag ice">Gasolina</span>
+        </div>
+        <div class="veh-img-wrap">
+          <img src="https://shineraymexico.mx/recursos/vehiculos/Truck/t50_costado3.png" alt="Shineray T50" loading="lazy">
+        </div>
+        <div class="veh-specs">
+          <div class="vs"><div class="k">Carga máx.</div><div class="v">2,370<span style="font-size:.6em"> kg</span></div></div>
+          <div class="vs"><div class="k">Motor</div><div class="v">1.6<span style="font-size:.6em"> L</span></div></div>
+          <div class="vs"><div class="k">Rendimiento</div><div class="v">13.03<span style="font-size:.6em"> km/L</span></div></div>
+          <div class="vs"><div class="k">Transmisión</div><div class="v">5<span style="font-size:.6em"> vel</span></div></div>
+        </div>
+        <div class="veh-foot">
+          <a class="veh-link" href="https://shineraymexico.mx/recursos/vehiculos/Fichas_tecnicas/ficha_tecnica_t50.pdf" target="_blank" rel="noopener">Ficha técnica <span class="ar">→</span></a>
+        </div>
+      </article>
+
+      <!-- T30 -->
+      <article class="veh-card reveal">
+        <div class="veh-top">
+          <div>
+            <div class="veh-name">T30</div>
+            <div class="veh-class">Mini Truck · Combustión 1.6 L</div>
+          </div>
+          <span class="tag ice">Gasolina</span>
+        </div>
+        <div class="veh-img-wrap">
+          <img src="https://shineraymexico.mx/recursos/vehiculos/minitrucks/T30/t30_white_4.png" alt="Shineray T30" loading="lazy">
+        </div>
+        <div class="veh-specs">
+          <div class="vs"><div class="k">Carga máx.</div><div class="v">1,475<span style="font-size:.6em"> kg</span></div></div>
+          <div class="vs"><div class="k">Motor</div><div class="v">1.6<span style="font-size:.6em"> L</span></div></div>
+          <div class="vs"><div class="k">Rendimiento</div><div class="v">13.23<span style="font-size:.6em"> km/L</span></div></div>
+          <div class="vs"><div class="k">Garantía</div><div class="v">3<span style="font-size:.6em"> años</span></div></div>
+        </div>
+        <div class="veh-foot">
+          <a class="veh-link" href="https://shineraymexico.mx/recursos/vehiculos/Fichas_tecnicas/ficha_tecnica_t30.pdf" target="_blank" rel="noopener">Ficha técnica <span class="ar">→</span></a>
+        </div>
+      </article>
+
+      <!-- T32 -->
+      <article class="veh-card reveal">
+        <div class="veh-top">
+          <div>
+            <div class="veh-name">T32</div>
+            <div class="veh-class">Mini Truck · Combustión 1.5 L</div>
+          </div>
+          <span class="tag ice">Gasolina</span>
+        </div>
+        <div class="veh-img-wrap">
+          <img src="https://shineraymexico.mx/recursos/vehiculos/minitrucks/T32/T32_frente2.png" alt="Shineray T32" loading="lazy">
+        </div>
+        <div class="veh-specs">
+          <div class="vs"><div class="k">Carga máx.</div><div class="v">1,200<span style="font-size:.6em"> kg</span></div></div>
+          <div class="vs"><div class="k">Motor</div><div class="v">1.5<span style="font-size:.6em"> L</span></div></div>
+          <div class="vs"><div class="k">Transmisión</div><div class="v">5<span style="font-size:.6em"> vel</span></div></div>
+          <div class="vs"><div class="k">Garantía</div><div class="v">3<span style="font-size:.6em"> años</span></div></div>
+        </div>
+        <div class="veh-foot">
+          <a class="veh-link" href="https://shineraymexico.mx/recursos/vehiculos/Fichas_tecnicas/ficha_tecnica_t32.pdf" target="_blank" rel="noopener">Ficha técnica <span class="ar">→</span></a>
+        </div>
+      </article>
+
+      <!-- X30 -->
+      <article class="veh-card reveal">
+        <div class="veh-top">
+          <div>
+            <div class="veh-name">X30</div>
+            <div class="veh-class">Cargo Van · Combustión 1.5 L</div>
+          </div>
+          <span class="tag ice">Gasolina</span>
+        </div>
+        <div class="veh-img-wrap">
+          <img src="https://shineraymexico.mx/recursos/vehiculos/Cargovan/2.png" alt="Shineray X30 Cargo Van" loading="lazy">
+        </div>
+        <div class="veh-specs">
+          <div class="vs"><div class="k">Carga máx.</div><div class="v">910<span style="font-size:.6em"> kg</span></div></div>
+          <div class="vs"><div class="k">Motor</div><div class="v">1.5<span style="font-size:.6em"> L</span></div></div>
+          <div class="vs"><div class="k">Rendimiento</div><div class="v">15.63<span style="font-size:.6em"> km/L</span></div></div>
+          <div class="vs"><div class="k">Garantía</div><div class="v">3<span style="font-size:.6em"> años</span></div></div>
+        </div>
+        <div class="veh-foot">
+          <a class="veh-link" href="https://shineraymexico.mx/recursos/vehiculos/Fichas_tecnicas/ficha_tecnica_x30.pdf" target="_blank" rel="noopener">Ficha técnica <span class="ar">→</span></a>
+        </div>
+      </article>
+
+      <!-- G03F -->
+      <article class="veh-card reveal">
+        <div class="veh-top">
+          <div>
+            <div class="veh-name">G03F</div>
+            <div class="veh-class">SUV · Combustión 1.5 L</div>
+          </div>
+          <span class="tag ice">Gasolina</span>
+        </div>
+        <div class="veh-img-wrap">
+          <img src="https://shineraymexico.mx/recursos/vehiculos/SUV/g03f_frente2_b.png" alt="Shineray G03F SUV" loading="lazy">
+        </div>
+        <div class="veh-specs">
+          <div class="vs"><div class="k">Categoría</div><div class="v">SUV</div></div>
+          <div class="vs"><div class="k">Motor</div><div class="v">1.5<span style="font-size:.6em"> L</span></div></div>
+          <div class="vs"><div class="k">Transmisión</div><div class="v">5<span style="font-size:.6em"> vel</span></div></div>
+          <div class="vs"><div class="k">Garantía</div><div class="v">3<span style="font-size:.6em"> años</span></div></div>
+        </div>
+        <div class="veh-foot">
+          <a class="veh-link" href="https://shineraymexico.mx/recursos/vehiculos/Fichas_tecnicas/ficha_tecnica_g03f.pdf" target="_blank" rel="noopener">Ficha técnica <span class="ar">→</span></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FLEET (ELÉCTRICOS) -->
+<section class="band band-paper3" id="electricos">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="l reveal">
+        <span class="eyebrow">IBS Eléctricos · Cero emisiones</span>
+        <h2 class="section-title">Flota eléctrica</h2>
       </div>
       <p class="lede reveal">Cuatro plataformas eléctricas, de ligero a pesado. Datos técnicos verificados sobre ciclo CLTC, listos para operación de flota.</p>
     </div>
@@ -507,7 +690,7 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="l reveal">
-        <span class="eyebrow">Cobertura ACTUAL</span>
+        <span class="eyebrow">Cobertura</span>
         <h2 class="section-title">Presencia<br>en México</h2>
       </div>
       <p class="lede reveal">Presencia lista para despliegue y soporte de flota. 
@@ -516,7 +699,7 @@ Expandiéndonos hacia corredores logísticos estratégicos.</p>
 
     <div class="cov-grid">
       <div class="map reveal">
-        <svg viewBox="0 0 620 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mapa de México con Tepic (Nayarit) y Vallarta (Jalisco)">
+        <svg viewBox="0 0 620 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mapa de México con Tepic, Vallarta y Guadalajara">
           <defs>
             <radialGradient id="mxGlow" cx="42%" cy="60%" r="55%">
               <stop offset="0%" stop-color="#4F97FF" stop-opacity=".9"></stop>
@@ -535,11 +718,19 @@ Expandiéndonos hacia corredores logísticos estratégicos.</p>
           </g>
 
           <g class="marker">
-            <line class="lead" x1="250" y1="270" x2="334" y2="286"></line>
+            <line class="lead" x1="243" y1="267" x2="206" y2="271"></line>
             <circle class="pulse v" cx="247.20" cy="267.34" r="3"></circle>
             <circle class="dot v" cx="247.20" cy="267.34" r="5"></circle>
-            <text class="lbl" x="338" y="283">Vallarta</text>
-            <text class="sub" x="338" y="298">Jalisco</text>
+            <text class="lbl" x="200" y="269" text-anchor="end">Vallarta</text>
+            <text class="sub" x="200" y="284" text-anchor="end">Jalisco</text>
+          </g>
+
+          <g class="marker">
+            <line class="lead" x1="292" y1="274" x2="330" y2="302"></line>
+            <circle class="pulse" cx="288" cy="273" r="3"></circle>
+            <circle class="dot" cx="288" cy="273" r="5"></circle>
+            <text class="lbl" x="334" y="301">Guadalajara</text>
+            <text class="sub" x="334" y="316">Jalisco</text>
           </g>
         </svg>
       </div>
@@ -557,6 +748,14 @@ Expandiéndonos hacia corredores logísticos estratégicos.</p>
           <div class="idx">02</div>
           <div>
             <h3>Vallarta</h3>
+            <p>Jalisco</p>
+            <span class="cov-status">Operación activa</span>
+          </div>
+        </div>
+        <div class="cov-item">
+          <div class="idx">03</div>
+          <div>
+            <h3>Guadalajara</h3>
             <p>Jalisco</p>
             <span class="cov-status">Operación activa</span>
           </div>
@@ -612,12 +811,12 @@ Control total de tu operación desde un solo panel.</p>
   <div class="wrap">
     <div class="cta reveal">
       <div class="cta-inner">
-        <span class="eyebrow center" style="color:var(--accent-sky)">Da el siguiente paso</span>
-        <h2 style="margin-top:18px">¿Listo para<br>electrificar tu flota?</h2>
-        <p>Agenda una demostración y descubre cuánto puede ahorrar tu operación con vehículos eléctricos de última milla.</p>
+        <span class="eyebrow center" style="color:var(--accent-sky)">Cotiza con IBS</span>
+        <h2 style="margin-top:18px">¿Listo para<br>mover tu negocio?</h2>
+        <p>Cuéntanos qué necesita tu operación — Shineray o eléctrico — y armamos la mejor opción para tu flota en Tepic, Vallarta y Guadalajara.</p>
         <div class="cta-actions">
-          <a href="mailto:hola@ibs.roca.ventures" class="btn btn-invert">Contactar asesor<span class="ar">→</span></a>
-          <a href="mailto:hola@ibs.roca.ventures" class="btn btn-ghost-invert">Solicitar cotización</a>
+          <a href="mailto:hola@ibluesky.ai" class="btn btn-invert">Contactar asesor<span class="ar">→</span></a>
+          <a href="mailto:hola@ibluesky.ai" class="btn btn-ghost-invert">Solicitar cotización</a>
         </div>
       </div>
     </div>
@@ -630,16 +829,14 @@ Control total de tu operación desde un solo panel.</p>
     <div class="foot-top">
       <div class="foot-brand">
         <a href="#top" class="brand"><span class="dot"></span>IBS</a>
-        <p>Innovación Blue Sky. 
-Soluciones de movilidad para flotas de última milla en México.</p>
+        <p>Innovación Blue Sky. Distribuidor de vehículos comerciales Shineray y unidades eléctricas para flotas en el occidente de México.</p>
       </div>
       <div class="foot-cols">
         <div class="foot-col">
-          <h4>Flota</h4>
-          <a href="#flota">V2 Ligero</a>
-          <a href="#flota">1500 Carga</a>
-          <a href="#flota">X7 Mediano</a>
-          <a href="#flota">Maxence</a>
+          <h4>Marcas</h4>
+          <a href="#shineray">Shineray comercial</a>
+          <a href="#electricos">Eléctricos IBS</a>
+          <a href="#cobertura">Cobertura</a>
         </div>
         <div class="foot-col">
           <h4>Empresa</h4>
@@ -649,13 +846,13 @@ Soluciones de movilidad para flotas de última milla en México.</p>
         </div>
         <div class="foot-col">
           <h4>Contacto</h4>
-          <a href="mailto:hola@ibs.roca.ventures">hola@ibluesky.ai</a>
+          <a href="mailto:hola@ibluesky.ai">hola@ibluesky.ai</a>
         </div>
       </div>
     </div>
     <div class="foot-bot">
       <span>© 2026 IBS · ibluesky.ai</span>
-      <span>Movilidad sin emisiones. Sin límites.</span>
+      <span>Innovación Blue Sky · Occidente de México</span>
     </div>
   </div>
 </footer>
