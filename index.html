@@ -1,1388 +1,661 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IBS — Intelligent Battery Systems</title>
-  <meta name="description" content="IBS ofrece soluciones de movilidad eléctrica para flotas de última milla: menor costo operativo, cero emisiones y control inteligente."/>
-  <meta name="theme-color" content="#090C10"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="apple-mobile-web-app-title" content="IBS"/>
-  <link rel="icon" type="image/png" sizes="180x180" href="apple-touch-icon.png"/>
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --bg: #090C10;
-      --surface: #0F1318;
-      --border: #1E2530;
-      --ink: #F0F4F8;
-      --muted: #4A5568;
-      --accent: #00E5A0;
-      --accent2: #0099FF;
-      --danger: #FF4D4D;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: 'Syne', sans-serif;
-      overflow-x: hidden;
-    }
-
-    /* Grain overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.4;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 3rem;
-      border-bottom: 1px solid var(--border);
-      background: rgba(9,12,16,0.85);
-      backdrop-filter: blur(20px);
-    }
-
-    .nav-logo {
-      font-size: 1.1rem;
-      font-weight: 800;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a {
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-      font-family: 'DM Mono', monospace;
-    }
-    .nav-links a:hover { color: var(--ink); }
-
-    .nav-cta {
-      padding: 0.55rem 1.4rem;
-      background: var(--accent);
-      color: #000;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-    .nav-cta:hover { opacity: 0.85; }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      padding-top: 72px;
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-    }
-
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 5rem 3rem 5rem 3rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .hero-tag::before {
-      content: '';
-      display: inline-block;
-      width: 24px;
-      height: 1px;
-      background: var(--accent);
-    }
-
-    .hero-title {
-      font-size: clamp(3rem, 5vw, 5rem);
-      font-weight: 800;
-      line-height: 1.0;
-      letter-spacing: -0.03em;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-title .line2 { color: var(--accent); }
-
-    .hero-sub {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 380px;
-      margin-bottom: 3rem;
-      font-weight: 300;
-    }
-
-    .hero-btns { display: flex; gap: 1rem; }
-
-    .btn-primary {
-      padding: 0.9rem 2rem;
-      background: var(--accent);
-      color: #000;
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-    .btn-primary:hover { opacity: 0.85; }
-
-    .btn-outline {
-      padding: 0.9rem 2rem;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .btn-outline:hover { border-color: var(--ink); color: var(--ink); }
-
-    /* Stats bar */
-    .hero-stats {
-      display: flex;
-      gap: 3rem;
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .stat-num {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--ink);
-      line-height: 1;
-    }
-
-    .stat-num span { color: var(--accent); }
-
-    .stat-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-top: 0.3rem;
-    }
-
-    /* ── HERO SHOWCASE ── */
-    .hero-right {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
-    }
-
-    .hero-showcase {
-      position: relative;
-      width: min(620px, 95%);
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.9rem;
-      padding: 0.9rem;
-      border: 1px solid var(--border);
-      background:
-        radial-gradient(circle at 10% 15%, rgba(0, 229, 160, 0.14), transparent 48%),
-        radial-gradient(circle at 90% 80%, rgba(0, 153, 255, 0.12), transparent 42%),
-        #0b1016;
-      box-shadow: 0 26px 64px rgba(0, 0, 0, 0.5);
-      overflow: hidden;
-    }
-
-    .hero-showcase::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(52, 67, 84, 0.18) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(52, 67, 84, 0.18) 1px, transparent 1px);
-      background-size: 34px 34px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .hero-model-card {
-      position: relative;
-      z-index: 1;
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(17, 24, 33, 0.94), rgba(10, 14, 19, 0.94));
-      min-height: 168px;
-      padding: 0.6rem 0.7rem 0.55rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .hero-model-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(0, 229, 160, 0.5);
-    }
-
-    .hero-model-card:nth-child(2):hover { border-color: rgba(0, 153, 255, 0.5); }
-    .hero-model-card:nth-child(3):hover { border-color: rgba(151, 226, 175, 0.5); }
-    .hero-model-card:nth-child(4):hover { border-color: rgba(255, 140, 66, 0.5); }
-
-    .hero-model-media {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 126px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      margin-bottom: 0.45rem;
-      background: radial-gradient(circle at 50% 78%, rgba(0, 229, 160, 0.14), transparent 56%);
-    }
-
-    .hero-model-card:nth-child(2) .hero-model-media {
-      background: radial-gradient(circle at 50% 78%, rgba(0, 153, 255, 0.14), transparent 56%);
-    }
-
-    .hero-model-card:nth-child(3) .hero-model-media {
-      background: radial-gradient(circle at 50% 78%, rgba(143, 211, 168, 0.14), transparent 56%);
-    }
-
-    .hero-model-card:nth-child(4) .hero-model-media {
-      background: radial-gradient(circle at 50% 78%, rgba(255, 140, 66, 0.16), transparent 56%);
-    }
-
-    .hero-model-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      transform: scale(1.04);
-      filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.42));
-    }
-
-    .hero-model-meta {
-      font-family: 'DM Mono', monospace;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 0.6rem;
-    }
-
-    .hero-model-name {
-      font-size: 0.78rem;
-      letter-spacing: 0.16em;
-      color: var(--ink);
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-
-    .hero-model-type {
-      font-size: 0.62rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    /* Grid lines background */
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 60px 60px;
-      opacity: 0.2;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* ── FLEET SECTION ── */
-    .fleet {
-      padding: 8rem 3rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 4rem;
-    }
-
-    .section-tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 0.8rem;
-    }
-
-    .section-title {
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-    }
-
-    .section-note {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-      margin-top: 0.8rem;
-    }
-
-    .fleet-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1px;
-      background: var(--border);
-    }
-
-    .vehicle-card {
-      background: var(--surface);
-      padding: 2.5rem;
-      cursor: pointer;
-      transition: background 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .vehicle-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transition: transform 0.3s;
-    }
-
-    .vehicle-card:hover { background: #141920; }
-    .vehicle-card:hover::before { transform: scaleX(1); }
-
-    .vehicle-img {
-      width: 100%;
-      aspect-ratio: 16/10;
-      background: var(--bg);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .vehicle-img canvas {
-      width: 100% !important;
-      height: 100% !important;
-    }
-
-    .vehicle-static-photo {
-      display: none;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      padding: 0.35rem;
-      transform: scale(1.03);
-      filter: drop-shadow(0 14px 16px rgba(0, 0, 0, 0.36));
-    }
-
-    .vehicle-img.is-static canvas {
-      display: none;
-    }
-
-    .vehicle-img.is-static .vehicle-static-photo {
-      display: block;
-    }
-
-    .vehicle-img.is-static {
-      background: radial-gradient(circle at 50% 75%, rgba(0, 229, 160, 0.16), transparent 48%), var(--bg);
-    }
-
-    .vehicle-badge {
-      position: absolute;
-      top: 0.8rem;
-      right: 0.8rem;
-      padding: 0.3rem 0.7rem;
-      background: rgba(0,229,160,0.15);
-      border: 1px solid rgba(0,229,160,0.3);
-      color: var(--accent);
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .vehicle-name {
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
-
-    .vehicle-type {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-
-    .vehicle-specs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      border-top: 1px solid var(--border);
-      padding-top: 1.2rem;
-    }
-
-    .spec-val {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--ink);
-    }
-
-    .spec-key {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-top: 0.2rem;
-    }
-
-    .vehicle-links {
-      margin-top: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-    }
-
-    .vehicle-link {
-      display: inline-flex;
-      align-items: center;
-      border: 1px solid var(--border);
-      padding: 0.38rem 0.62rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-
-    .vehicle-link:hover {
-      border-color: var(--accent);
-      color: var(--ink);
-      background: rgba(0, 229, 160, 0.08);
-    }
-
-    .tech-specs {
-      margin-top: 2rem;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1px;
-      background: var(--border);
-    }
-
-    .tech-card {
-      background: var(--surface);
-      padding: 1.35rem;
-    }
-
-    .tech-card h3 {
-      font-size: 1rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .tech-meta {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.66rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.85rem;
-    }
-
-    .tech-list {
-      display: grid;
-      gap: 0.5rem;
-    }
-
-    .tech-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.85rem;
-      border-top: 1px dashed rgba(30, 37, 48, 0.8);
-      padding-top: 0.5rem;
-    }
-
-    .tech-key {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      min-width: 112px;
-    }
-
-    .tech-val {
-      font-size: 0.84rem;
-      line-height: 1.45;
-      text-align: right;
-    }
-
-    /* ── COVERAGE MAP ── */
-    .coverage {
-      padding: 8rem 3rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .coverage-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
-      gap: 1px;
-      background: var(--border);
-    }
-
-    .map-shell {
-      position: relative;
-      background: linear-gradient(160deg, #0d1218 0%, #101722 100%);
-      border: 1px solid var(--border);
-      min-height: 420px;
-      overflow: hidden;
-    }
-
-    .map-shell::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(30,37,48,0.5) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(30,37,48,0.5) 1px, transparent 1px);
-      background-size: 34px 34px;
-      opacity: 0.25;
-      pointer-events: none;
-    }
-
-    .mx-svg {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .mx-outline {
-      fill: rgba(11, 16, 22, 0.95);
-      stroke: rgba(0, 229, 160, 0.45);
-      stroke-width: 2;
-    }
-
-    .mx-glow {
-      fill: url(#mxGlow);
-      opacity: 0.3;
-    }
-
-    .city-marker circle {
-      fill: var(--accent);
-      stroke: #00160f;
-      stroke-width: 2;
-    }
-
-    .city-marker.vallarta circle {
-      fill: var(--accent2);
-      stroke: #001423;
-    }
-
-    .city-pulse {
-      transform-origin: center;
-      animation: mapPulse 2.2s ease-out infinite;
-      opacity: 0.65;
-    }
-
-    .city-pulse.vallarta {
-      animation-delay: 0.6s;
-    }
-
-    .city-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      fill: var(--ink);
-    }
-
-    .city-label-sub {
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.08em;
-      fill: var(--muted);
-    }
-
-    .city-line {
-      stroke: rgba(240,244,248,0.55);
-      stroke-width: 1;
-      stroke-dasharray: 3 3;
-    }
-
-    .coverage-cities {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 2.2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-
-    .coverage-city {
-      border: 1px solid var(--border);
-      background: #111821;
-      padding: 1rem 1.1rem;
-    }
-
-    .coverage-city h3 {
-      font-size: 1rem;
-      letter-spacing: 0.02em;
-      margin-bottom: 0.35rem;
-    }
-
-    .coverage-city p {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      line-height: 1.6;
-      text-transform: uppercase;
-    }
-
-    .coverage-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.66rem;
-      letter-spacing: 0.1em;
-      color: var(--ink);
-      text-transform: uppercase;
-      margin-top: 0.7rem;
-    }
-
-    .coverage-chip::before {
-      content: '';
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 4px rgba(0,229,160,0.14);
-    }
-
-    .coverage-chip.vallarta::before {
-      background: var(--accent2);
-      box-shadow: 0 0 0 4px rgba(0,153,255,0.14);
-    }
-
-    @keyframes mapPulse {
-      0% { transform: scale(0.4); opacity: 0.8; }
-      80% { transform: scale(3.3); opacity: 0; }
-      100% { transform: scale(3.3); opacity: 0; }
-    }
-
-    /* ── FEATURES ── */
-    .features {
-      padding: 8rem 3rem;
-      border-top: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: center;
-    }
-
-    .features-visual {
-      position: relative;
-      aspect-ratio: 1;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .features-visual::before {
-      content: '';
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,229,160,0.15) 0%, transparent 70%);
-    }
-
-    .ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid rgba(0,229,160,0.2);
-      animation: spin 20s linear infinite;
-    }
-
-    .ring:nth-child(2) { width: 280px; height: 280px; animation-duration: 15s; }
-    .ring:nth-child(3) { width: 200px; height: 200px; animation-duration: 10s; animation-direction: reverse; border-color: rgba(0,153,255,0.2); }
-    .ring:nth-child(4) { width: 120px; height: 120px; animation-duration: 7s; }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .center-icon {
-      position: relative;
-      z-index: 2;
-      width: 60px;
-      height: 60px;
-      background: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .features-list { display: flex; flex-direction: column; gap: 2rem; }
-
-    .feature-item {
-      display: flex;
-      gap: 1.5rem;
-      align-items: flex-start;
-      padding: 1.5rem;
-      border: 1px solid transparent;
-      transition: border-color 0.2s, background 0.2s;
-      cursor: default;
-    }
-
-    .feature-item:hover {
-      border-color: var(--border);
-      background: var(--surface);
-    }
-
-    .feature-num {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      margin-top: 0.2rem;
-      min-width: 28px;
-    }
-
-    .feature-title {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
-
-    .feature-desc {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.6;
-      font-weight: 300;
-    }
-
-    /* ── CTA ── */
-    .cta-section {
-      padding: 8rem 3rem;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,229,160,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .cta-title {
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-
-    .cta-title .accent { color: var(--accent); }
-
-    .cta-sub {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.88rem;
-      color: var(--muted);
-      max-width: 480px;
-      margin: 0 auto 3rem;
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-logo {
-      font-size: 0.9rem;
-      font-weight: 800;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-    }
-
-    .footer-copy {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-    }
-
-    /* Animations */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.7s ease forwards;
-    }
-
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .fade-in:nth-child(1) { animation-delay: 0.1s; }
-    .fade-in:nth-child(2) { animation-delay: 0.2s; }
-    .fade-in:nth-child(3) { animation-delay: 0.3s; }
-
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: 1fr;
-        min-height: auto;
-        overflow: visible;
-      }
-      .hero-right {
-        order: -1;
-        padding: 1.1rem 1.4rem 1.7rem;
-      }
-      .hero-showcase {
-        width: 100%;
-        max-width: 640px;
-        margin: 0 auto;
-      }
-      .fleet-grid { grid-template-columns: 1fr; }
-      .tech-specs { grid-template-columns: 1fr; }
-      .coverage-grid { grid-template-columns: 1fr; }
-      .map-shell { min-height: 360px; }
-      .features { grid-template-columns: 1fr; }
-      .hero-left { padding: 1.4rem 1.4rem 3.5rem; }
-      .hero-btns { flex-wrap: wrap; }
-      .hero-btns a {
-        flex: 1 1 150px;
-        text-align: center;
-        padding: 0.78rem 1.1rem;
-        font-size: 0.74rem;
-        letter-spacing: 0.08em;
-      }
-      .hero-stats { flex-wrap: wrap; gap: 1.2rem 1.5rem; margin-top: 2.4rem; }
-      .hero-stats > div { min-width: 120px; }
-      .section-header { flex-direction: column; align-items: flex-start; gap: 1.2rem; margin-bottom: 2rem; }
-      .fleet, .coverage, .features, .cta-section { padding: 5rem 1.4rem; }
-      .vehicle-card { padding: 1.5rem; }
-      .coverage-cities { padding: 1.4rem; }
-      nav {
-        padding: 0.72rem 0.9rem;
-        padding-left: max(0.9rem, env(safe-area-inset-left));
-        padding-right: max(0.9rem, env(safe-area-inset-right));
-      }
-      .nav-logo { font-size: 0.92rem; letter-spacing: 0.12em; }
-      .nav-cta {
-        padding: 0.38rem 0.62rem;
-        font-size: 0.62rem;
-        letter-spacing: 0.05em;
-      }
-      .nav-links { display: none; }
-    }
-
-    @media (max-width: 600px) {
-      .hero-title { font-size: clamp(2.2rem, 10vw, 3rem); }
-      .hero-sub { font-size: 0.8rem; max-width: none; }
-      .hero-right { padding: 0.7rem 1rem 1.5rem; }
-      .hero-showcase {
-        gap: 0.6rem;
-        padding: 0.6rem;
-      }
-      .hero-model-card { min-height: 146px; padding: 0.48rem 0.52rem 0.44rem; }
-      .hero-model-media { min-height: 104px; margin-bottom: 0.35rem; }
-      .hero-model-name { font-size: 0.7rem; letter-spacing: 0.13em; }
-      .hero-model-type { font-size: 0.56rem; letter-spacing: 0.06em; }
-      .hero-btns { flex-direction: column; gap: 0.55rem; }
-      .hero-btns a { width: 100%; padding: 0.72rem 0.95rem; font-size: 0.71rem; }
-      .hero-stats {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1rem;
-      }
-      .hero-stats > div:last-child { grid-column: 1 / -1; }
-      .stat-num { font-size: 1.5rem; }
-      .vehicle-specs { grid-template-columns: 1fr; }
-      .tech-row { flex-direction: column; gap: 0.2rem; }
-      .tech-val { text-align: left; }
-      .map-shell { min-height: 300px; }
-      .city-label { font-size: 9px; }
-      .city-label-sub { font-size: 8px; }
-      footer {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.8rem;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#080B10" />
+<link rel="icon" type="image/png" href="apple-touch-icon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+<title>IBS — Intelligent Battery Systems</title>
+<meta name="description" content="IBS ofrece soluciones de movilidad eléctrica para flotas de última milla: menor costo operativo, cero emisiones y control inteligente." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#080B10;
+    --ink-2:#0D131B;
+    --ink-3:#131C27;
+    --line-dark:rgba(255,255,255,.10);
+    --line-dark-strong:rgba(255,255,255,.22);
+    --paper:#F4F6F8;
+    --paper-2:#EAEEF2;
+    --paper-3:#FFFFFF;
+    --line-light:rgba(9,14,20,.10);
+    --line-light-strong:rgba(9,14,20,.22);
+    --graphite:#586374;
+    --graphite-2:#8A93A1;
+    --text-dark:#0A0F16;
+    --text-mute:#5A6472;
+    --text-invert:#EDF1F5;
+    --text-invert-mute:#9AA6B4;
+    --accent:#1F6BFF;
+    --accent-bright:#4F97FF;
+    --accent-sky:#8FC4FF;
+    --shadow-veh:drop-shadow(0 34px 30px rgba(8,14,24,.28));
+    --ease:cubic-bezier(.22,.61,.36,1);
+    --maxw:1240px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{font-family:"Inter",system-ui,sans-serif;background:var(--paper);color:var(--text-dark);line-height:1.5;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  ::selection{background:var(--accent);color:#fff}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,56px)}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:500;color:var(--accent);display:inline-flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--accent);display:inline-block}
+  .eyebrow.center{justify-content:center}
+  h1,h2,h3{font-family:"Archivo",sans-serif;font-weight:800;line-height:1.02;letter-spacing:-.02em}
+  .display{font-size:clamp(44px,8.2vw,116px);font-weight:900;letter-spacing:-.035em;line-height:.94}
+  .section-title{font-size:clamp(34px,5.4vw,74px);font-weight:900;letter-spacing:-.03em;line-height:.96}
+  .lede{font-size:clamp(16px,1.5vw,20px);line-height:1.6;color:var(--text-mute);font-weight:400;max-width:56ch}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:10px;font-family:"Archivo",sans-serif;font-weight:600;font-size:14px;letter-spacing:.01em;padding:15px 26px;border-radius:100px;border:1px solid transparent;transition:all .4s var(--ease);cursor:pointer}
+  .btn .ar{transition:transform .4s var(--ease)}
+  .btn:hover .ar{transform:translateX(4px)}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:#0E5AF0;box-shadow:0 10px 30px rgba(31,107,255,.35)}
+  .btn-ghost{background:transparent;color:var(--text-dark);border-color:var(--line-light-strong)}
+  .btn-ghost:hover{border-color:var(--text-dark);background:var(--text-dark);color:#fff}
+  .btn-invert{background:#fff;color:var(--ink)}
+  .btn-invert:hover{background:var(--accent);color:#fff;box-shadow:0 10px 30px rgba(31,107,255,.4)}
+  .btn-ghost-invert{background:transparent;color:#fff;border-color:var(--line-dark-strong)}
+  .btn-ghost-invert:hover{border-color:#fff;background:#fff;color:var(--ink)}
+
+  /* ============ NAV ============ */
+  header{position:fixed;top:0;left:0;right:0;z-index:100;transition:all .5s var(--ease)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:76px;transition:height .5s var(--ease)}
+  header.scrolled{background:rgba(244,246,248,.82);backdrop-filter:blur(18px) saturate(1.4);border-bottom:1px solid var(--line-light)}
+  header.scrolled .nav{height:62px}
+  .brand{font-family:"Archivo",sans-serif;font-weight:900;font-size:22px;letter-spacing:.06em;display:flex;align-items:center;gap:9px}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(31,107,255,.16)}
+  .nav-links{display:flex;gap:38px;align-items:center}
+  .nav-links a{font-size:14px;font-weight:500;color:var(--text-mute);position:relative;transition:color .3s}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1.5px;background:var(--accent);transition:width .35s var(--ease)}
+  .nav-links a:hover{color:var(--text-dark)}
+  .nav-links a:hover::after{width:100%}
+  .nav-cta{display:flex;align-items:center;gap:18px}
+  .menu-btn{display:none;background:none;border:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px}
+  .menu-btn span{width:24px;height:2px;background:var(--text-dark);transition:.3s}
+
+  /* ============ HERO ============ */
+  .hero{position:relative;padding:150px 0 40px;overflow:hidden;background:
+     radial-gradient(120% 90% at 82% 8%,rgba(31,107,255,.10),transparent 46%),
+     radial-gradient(100% 80% at 8% 100%,rgba(143,196,255,.16),transparent 50%),
+     linear-gradient(180deg,#F7F9FB 0%,#EDF1F5 100%)}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+  .hero h1{margin:22px 0 26px}
+  .hero .lede{margin-bottom:34px}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-stage{position:relative;margin-top:20px}
+  .hero-veh{width:100%;max-width:1180px;margin:0 auto;mix-blend-mode:multiply;filter:var(--shadow-veh)}
+  .hero-floor{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:66%;height:60px;background:radial-gradient(ellipse at center,rgba(8,14,24,.20),transparent 70%);filter:blur(6px);z-index:0}
+  .badge-float{position:absolute;top:8%;right:2%;background:rgba(255,255,255,.7);backdrop-filter:blur(10px);border:1px solid var(--line-light);border-radius:14px;padding:14px 18px;box-shadow:0 20px 40px rgba(8,14,24,.10)}
+  .badge-float .k{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+  .badge-float .v{font-family:"Archivo",sans-serif;font-weight:800;font-size:24px;margin-top:3px}
+
+  /* stat strip */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-light);margin-top:6px}
+  .stat{padding:30px 6px 6px}
+  .stat .n{font-family:"Archivo",sans-serif;font-weight:900;font-size:clamp(38px,5.2vw,66px);letter-spacing:-.04em;line-height:1;display:flex;align-items:baseline;gap:4px}
+  .stat .n small{font-size:.4em;font-weight:700;color:var(--text-mute);letter-spacing:0}
+  .stat .l{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-mute);margin-top:10px}
+
+  /* ============ SECTION SHELL ============ */
+  section{position:relative}
+  .band{padding:clamp(80px,11vw,150px) 0}
+  .band-light{background:var(--paper)}
+  .band-paper3{background:linear-gradient(180deg,#FFFFFF,#F1F4F7)}
+  .band-dark{background:var(--ink);color:var(--text-invert)}
+  .band-dark .section-title,.band-dark h3{color:#fff}
+  .band-dark .lede{color:var(--text-invert-mute)}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:clamp(38px,5vw,64px)}
+  .sec-head .l{max-width:60ch}
+  .sec-head h2{margin-top:18px}
+
+  /* ============ FLEET ============ */
+  .fleet-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .veh-card{position:relative;background:var(--paper-3);border:1px solid var(--line-light);border-radius:22px;padding:30px 30px 26px;overflow:hidden;transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s}
+  .veh-card::after{content:"";position:absolute;inset:0;border-radius:22px;background:radial-gradient(90% 70% at 50% 0%,rgba(31,107,255,.06),transparent 60%);opacity:0;transition:opacity .5s}
+  .veh-card:hover{transform:translateY(-6px);box-shadow:0 30px 60px rgba(8,14,24,.13);border-color:var(--line-light-strong)}
+  .veh-card:hover::after{opacity:1}
+  .veh-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:2}
+  .tag{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#158a4a;display:inline-flex;align-items:center;gap:7px}
+  .tag::before{content:"";width:6px;height:6px;border-radius:50%;background:#1DBB63;box-shadow:0 0 0 3px rgba(29,187,99,.18)}
+  .veh-name{font-family:"Archivo",sans-serif;font-weight:900;font-size:40px;letter-spacing:-.03em;line-height:1}
+  .veh-class{font-size:13px;color:var(--text-mute);margin-top:6px}
+  .veh-img-wrap{position:relative;height:190px;display:flex;align-items:center;justify-content:center;margin:14px 0 20px}
+  .veh-img-wrap img{max-height:180px;width:auto;mix-blend-mode:multiply;filter:drop-shadow(0 20px 16px rgba(8,14,24,.20));transition:transform .6s var(--ease)}
+  .veh-card:hover .veh-img-wrap img{transform:scale(1.05)}
+  .veh-specs{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-light);border-radius:12px;overflow:hidden;position:relative;z-index:2}
+  .vs{background:var(--paper-3);padding:14px 16px}
+  .vs .k{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-mute)}
+  .vs .v{font-family:"Archivo",sans-serif;font-weight:700;font-size:20px;margin-top:5px;letter-spacing:-.01em}
+  .veh-foot{display:flex;justify-content:space-between;align-items:center;margin-top:20px;position:relative;z-index:2}
+  .veh-link{font-family:"Archivo",sans-serif;font-weight:600;font-size:13px;color:var(--accent);display:inline-flex;gap:7px;align-items:center}
+  .veh-link .ar{transition:transform .4s var(--ease)}
+  .veh-card:hover .veh-link .ar{transform:translateX(4px)}
+
+  /* ============ SPEC EXPLORER ============ */
+  .spec-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:34px}
+  .spec-tab{font-family:"Archivo",sans-serif;font-weight:700;font-size:15px;padding:11px 22px;border-radius:100px;border:1px solid var(--line-dark);color:var(--text-invert-mute);background:transparent;cursor:pointer;transition:all .35s var(--ease)}
+  .spec-tab.active{background:#fff;color:var(--ink);border-color:#fff}
+  .spec-tab:not(.active):hover{border-color:var(--line-dark-strong);color:#fff}
+  .spec-panel{display:none;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,70px);align-items:center}
+  .spec-panel.active{display:grid;animation:fade .6s var(--ease)}
+  @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .spec-stage{position:relative;background:radial-gradient(75% 60% at 50% 42%,#FFFFFF,#DFE6EE 78%);border-radius:24px;height:360px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .spec-stage::before{content:"";position:absolute;bottom:64px;left:50%;transform:translateX(-50%);width:70%;height:26px;background:radial-gradient(ellipse,rgba(8,14,24,.28),transparent 70%);filter:blur(5px)}
+  .spec-stage img{max-width:86%;max-height:74%;mix-blend-mode:multiply;filter:drop-shadow(0 26px 22px rgba(8,14,24,.28));position:relative}
+  .spec-watermark{position:absolute;top:18px;left:22px;font-family:"Archivo",sans-serif;font-weight:900;font-size:88px;color:rgba(9,14,20,.05);letter-spacing:-.04em;line-height:1}
+  .spec-info h3{font-size:clamp(30px,4vw,48px);font-weight:900;letter-spacing:-.03em}
+  .spec-info .cls{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-bright);margin-bottom:8px}
+  .spec-rows{margin-top:26px;border-top:1px solid var(--line-dark)}
+  .spec-row{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-dark)}
+  .spec-row .k{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-invert-mute);padding-top:3px}
+  .spec-row .v{font-size:15px;color:#fff;font-weight:500;line-height:1.5}
+
+  /* ============ COVERAGE ============ */
+  .cov-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,66px);align-items:center}
+  .map{position:relative;aspect-ratio:4/3.4;background:var(--ink-2);border:1px solid var(--line-dark);border-radius:24px;overflow:hidden}
+  .map svg{width:100%;height:100%}
+  .mx-path{fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.22);stroke-width:1.2}
+  .pin{position:absolute;transform:translate(-50%,-50%)}
+  .pin .ring{width:16px;height:16px;border-radius:50%;background:var(--accent-bright);box-shadow:0 0 0 6px rgba(79,151,255,.22)}
+  .pin .ring::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1.5px solid var(--accent-bright);animation:pulse 2.4s var(--ease) infinite}
+  @keyframes pulse{0%{transform:scale(.7);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+  .pin .lbl{position:absolute;left:24px;top:-4px;font-family:"Archivo",sans-serif;font-weight:700;font-size:14px;color:#fff;white-space:nowrap}
+  .cov-list{display:flex;flex-direction:column;gap:2px}
+  .cov-item{padding:26px 0;border-top:1px solid var(--line-dark);display:flex;gap:22px;align-items:flex-start}
+  .cov-item:last-child{border-bottom:1px solid var(--line-dark)}
+  .cov-item .idx{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--accent-bright);padding-top:6px}
+  .cov-item h3{font-size:26px;font-weight:800}
+  .cov-item p{color:var(--text-invert-mute);font-size:15px;margin:8px 0 12px;max-width:46ch}
+  .cov-status{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#1DBB63;display:inline-flex;gap:7px;align-items:center}
+  .cov-status::before{content:"";width:6px;height:6px;border-radius:50%;background:#1DBB63;box-shadow:0 0 0 3px rgba(29,187,99,.2)}
+
+  /* ============ TECH ============ */
+  .tech-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-light);border:1px solid var(--line-light);border-radius:24px;overflow:hidden}
+  .tech-cell{background:var(--paper);padding:clamp(30px,4vw,48px);position:relative;transition:background .5s}
+  .tech-cell:hover{background:var(--paper-3)}
+  .tech-num{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--accent);letter-spacing:.1em}
+  .tech-cell h3{font-size:clamp(22px,2.4vw,28px);font-weight:800;margin:20px 0 12px;letter-spacing:-.02em}
+  .tech-cell p{color:var(--text-mute);font-size:15px;line-height:1.6;max-width:42ch}
+  .tech-cell .ico{position:absolute;top:clamp(30px,4vw,48px);right:clamp(30px,4vw,48px);width:26px;height:26px;color:var(--accent);opacity:.85}
+
+  /* ============ CTA ============ */
+  .cta{background:radial-gradient(120% 120% at 50% 0%,#123A8C 0%,#0B1B3C 42%,#080B10 100%);color:#fff;border-radius:clamp(24px,3vw,34px);padding:clamp(50px,8vw,100px) clamp(30px,6vw,90px);text-align:center;position:relative;overflow:hidden}
+  .cta::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:80%;height:80%;background:radial-gradient(circle,rgba(79,151,255,.28),transparent 60%)}
+  .cta-inner{position:relative;z-index:2}
+  .cta h2{font-size:clamp(34px,6vw,72px);font-weight:900;letter-spacing:-.03em;line-height:.98}
+  .cta p{color:#B8C6DC;font-size:clamp(15px,1.5vw,19px);max-width:52ch;margin:24px auto 36px}
+  .cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+  /* ============ FOOTER ============ */
+  footer{background:var(--ink);color:var(--text-invert);padding:70px 0 40px}
+  .foot-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;padding-bottom:44px;border-bottom:1px solid var(--line-dark)}
+  .foot-brand{max-width:34ch}
+  .foot-brand p{color:var(--text-invert-mute);font-size:14px;margin-top:16px;line-height:1.6}
+  .foot-cols{display:flex;gap:64px;flex-wrap:wrap}
+  .foot-col h4{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-invert-mute);margin-bottom:18px}
+  .foot-col a{display:block;font-size:14px;color:#C4CEDB;margin-bottom:12px;transition:color .3s}
+  .foot-col a:hover{color:#fff}
+  .foot-bot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:26px;font-size:13px;color:var(--text-invert-mute)}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ============ RESPONSIVE ============ */
+  @media(max-width:900px){
+    .nav-links,.nav-cta .btn{display:none}
+    .menu-btn{display:flex}
+    .fleet-grid,.tech-grid{grid-template-columns:1fr}
+    .spec-panel.active{grid-template-columns:1fr}
+    .cov-grid{grid-template-columns:1fr}
+    .spec-stage{height:280px;order:-1}
+    .stat .l{font-size:10px}
+  }
+  @media(max-width:560px){
+    .stats{grid-template-columns:1fr;gap:0}
+    .stat{border-bottom:1px solid var(--line-light);padding:22px 0}
+    .veh-name{font-size:34px}
+    .badge-float{display:none}
+    .foot-cols{gap:36px}
+  }
+  /* mobile menu */
+  .mobile-menu{position:fixed;inset:0;background:rgba(244,246,248,.98);backdrop-filter:blur(20px);z-index:99;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:0 40px;transform:translateY(-100%);transition:transform .5s var(--ease)}
+  .mobile-menu.open{transform:none}
+  .mobile-menu a{font-family:"Archivo",sans-serif;font-weight:800;font-size:34px;letter-spacing:-.02em;padding:10px 0;color:var(--text-dark)}
+  .mobile-menu .btn{margin-top:24px;align-self:flex-start}
+</style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav aria-label="Navegación principal">
-    <a href="#" class="nav-logo">IBS</a>
-    <ul class="nav-links">
-      <li><a href="#fleet">Flota</a></li>
-      <li><a href="#cobertura">Cobertura</a></li>
-      <li><a href="#features">Tecnología</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-    <a href="#contacto" class="nav-cta">Cotizar</a>
-  </nav>
+<!-- NAV -->
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="#top" class="brand"><span class="dot"></span>IBS</a>
+    <nav class="nav-links">
+      <a href="#flota">Flota</a>
+      <a href="#specs">Especificaciones</a>
+      <a href="#cobertura">Cobertura</a>
+      <a href="#tecnologia">Tecnología</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#contacto" class="btn btn-primary">Cotizar <span class="ar">→</span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Menú"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-left">
-      <div class="hero-tag fade-in">Última milla · Flota eléctrica</div>
-      <h1 class="hero-title fade-in">
-        Movilidad<br/>
-        <span class="line2">sin emisiones.</span><br/>
-        Sin límites.
-      </h1>
-      <p class="hero-sub fade-in">
-        Vehículos eléctricos de alta eficiencia diseñados para operaciones de última milla. Reduce costos, elimina emisiones, escala tu flota.
-      </p>
-      <div class="hero-btns fade-in">
-        <a href="#fleet" class="btn-primary">Ver flota</a>
-        <a href="#contacto" class="btn-outline">Agendar demo</a>
-      </div>
-      <div class="hero-stats fade-in">
-        <div>
-          <div class="stat-num">0<span>g</span></div>
-          <div class="stat-label">CO₂ por km</div>
-        </div>
-        <div>
-          <div class="stat-num">270<span>km</span></div>
-          <div class="stat-label">autonomía máxima</div>
-        </div>
-        <div>
-          <div class="stat-num">1,550<span>kg</span></div>
-          <div class="stat-label">carga útil máxima</div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#flota">Flota</a>
+  <a href="#specs">Especificaciones</a>
+  <a href="#cobertura">Cobertura</a>
+  <a href="#tecnologia">Tecnología</a>
+  <a href="#contacto" class="btn btn-primary">Cotizar →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div style="max-width:900px">
+        <span class="eyebrow reveal">Última milla · Flota eléctrica</span>
+        <h1 class="display reveal">Movilidad sin<br>emisiones.<br><span style="color:var(--graphite)">Sin límites.</span></h1>
+        <p class="lede reveal">Vehículos eléctricos de alta eficiencia diseñados para operaciones de última milla. Reduce costos, elimina emisiones y escala tu flota con control total.</p>
+        <div class="hero-actions reveal">
+          <a href="#flota" class="btn btn-primary">Ver flota <span class="ar">→</span></a>
+          <a href="#contacto" class="btn btn-ghost">Agendar demo</a>
         </div>
       </div>
     </div>
-    <div class="hero-right">
-      <div class="hero-showcase" aria-label="Modelos disponibles">
-        <article class="hero-model-card">
-          <div class="hero-model-media">
-            <img loading="eager" decoding="async" src="assets/models/v2.png" alt="Modelo V2" />
-          </div>
-          <div class="hero-model-meta">
-            <span class="hero-model-name">V2</span>
-            <span class="hero-model-type">Ligero</span>
-          </div>
-        </article>
-        <article class="hero-model-card">
-          <div class="hero-model-media">
-            <img loading="eager" decoding="async" src="assets/models/1500.png" alt="Modelo 1500" />
-          </div>
-          <div class="hero-model-meta">
-            <span class="hero-model-name">1500</span>
-            <span class="hero-model-type">Carga</span>
-          </div>
-        </article>
-        <article class="hero-model-card">
-          <div class="hero-model-media">
-            <img loading="eager" decoding="async" src="assets/models/x7.png" alt="Modelo X7" />
-          </div>
-          <div class="hero-model-meta">
-            <span class="hero-model-name">X7</span>
-            <span class="hero-model-type">Mediano</span>
-          </div>
-        </article>
-        <article class="hero-model-card">
-          <div class="hero-model-media">
-            <img loading="eager" decoding="async" src="assets/models/maxence.png" alt="Modelo Maxence" />
-          </div>
-          <div class="hero-model-meta">
-            <span class="hero-model-name">Maxence</span>
-            <span class="hero-model-type">Pesado</span>
-          </div>
-        </article>
+  </div>
+
+  <div class="wrap">
+    <div class="hero-stage reveal">
+      <div class="hero-floor"></div>
+      <img class="hero-veh" src="assets/maxence.png" alt="IBS Maxence — vehículo eléctrico pesado" />
+      <div class="badge-float">
+        <div class="k">Flagship</div>
+        <div class="v">Maxence</div>
       </div>
     </div>
-  </section>
 
-  <!-- FLEET -->
-  <section class="fleet" id="fleet">
-    <div class="section-header">
-      <div>
-        <div class="section-tag">Catálogo 2026</div>
+    <div class="stats">
+      <div class="stat reveal">
+        <div class="n">0<small>g</small></div>
+        <div class="l">CO₂ por kilómetro</div>
+      </div>
+      <div class="stat reveal">
+        <div class="n">270<small>km</small></div>
+        <div class="l">Autonomía máxima</div>
+      </div>
+      <div class="stat reveal">
+        <div class="n">1,550<small>kg</small></div>
+        <div class="l">Carga útil máxima</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLEET -->
+<section class="band band-paper3" id="flota">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="l reveal">
+        <span class="eyebrow">Catálogo 2026</span>
         <h2 class="section-title">Nuestra flota</h2>
-        <p class="section-note">Datos técnicos obtenidos de brochures oficiales de BPS E-TRUCK (CLTC con carga de 100 kg).</p>
       </div>
-      <a href="#contacto" class="btn-outline">Solicitar cotización →</a>
+      <p class="lede reveal">Cuatro plataformas eléctricas, de ligero a pesado. Datos técnicos verificados sobre ciclo CLTC, listos para operación de flota.</p>
     </div>
+
     <div class="fleet-grid">
-
-      <div class="vehicle-card">
-        <div class="vehicle-img">
-          <canvas id="card-canvas-1"></canvas>
-          <span class="vehicle-badge">Disponible</span>
+      <!-- V2 -->
+      <article class="veh-card reveal">
+        <div class="veh-top">
+          <div>
+            <div class="veh-name">V2</div>
+            <div class="veh-class">Ligero eléctrico · Chasis / Caja / Plataforma</div>
+          </div>
+          <span class="tag">Disponible</span>
         </div>
-        <div class="vehicle-name">V2</div>
-        <div class="vehicle-type">Ligero eléctrico · Chasis / Caja seca / Plataforma</div>
-        <div class="vehicle-specs">
-          <div><div class="spec-val">150-180 km</div><div class="spec-key">Autonomía</div></div>
-          <div><div class="spec-val">700 kg</div><div class="spec-key">Carga útil</div></div>
-          <div><div class="spec-val">17.88 kWh</div><div class="spec-key">Batería</div></div>
-          <div><div class="spec-val">30 kW</div><div class="spec-key">Potencia</div></div>
+        <div class="veh-img-wrap">
+          <img src="assets/v2.png" alt="IBS V2" loading="lazy" />
         </div>
-        <div class="vehicle-links">
-          <a class="vehicle-link" target="_blank" rel="noopener noreferrer" href="https://www.bpsetruck.com/_files/ugd/8b422d_de34743aedb943db8a9d2aaef0aaa886.pdf">Brochure V2</a>
+        <div class="veh-specs">
+          <div class="vs"><div class="k">Autonomía</div><div class="v">150–180<span style="font-size:.6em"> km</span></div></div>
+          <div class="vs"><div class="k">Carga útil</div><div class="v">700<span style="font-size:.6em"> kg</span></div></div>
+          <div class="vs"><div class="k">Batería</div><div class="v">17.88<span style="font-size:.6em"> kWh</span></div></div>
+          <div class="vs"><div class="k">Potencia</div><div class="v">30<span style="font-size:.6em"> kW</span></div></div>
         </div>
-      </div>
-
-      <div class="vehicle-card">
-        <div class="vehicle-img">
-          <canvas id="card-canvas-2"></canvas>
-          <span class="vehicle-badge" style="background:rgba(0,153,255,0.15);border-color:rgba(0,153,255,0.3);color:var(--accent2)">Disponible</span>
-        </div>
-        <div class="vehicle-name">1500</div>
-        <div class="vehicle-type">Carga eléctrica · Chasis / Caja seca / Plataforma</div>
-        <div class="vehicle-specs">
-          <div><div class="spec-val">170-200 km</div><div class="spec-key">Autonomía</div></div>
-          <div><div class="spec-val">650-730 kg</div><div class="spec-key">Carga útil</div></div>
-          <div><div class="spec-val">20.72 kWh</div><div class="spec-key">Batería</div></div>
-          <div><div class="spec-val">20 kW</div><div class="spec-key">Potencia</div></div>
-        </div>
-        <div class="vehicle-links">
-          <a class="vehicle-link" target="_blank" rel="noopener noreferrer" href="https://www.bpsetruck.com/_files/ugd/8b422d_c1187cffbd054e6cb1e80abddbbfb937.pdf">Brochure Chasis</a>
-          <a class="vehicle-link" target="_blank" rel="noopener noreferrer" href="https://www.bpsetruck.com/_files/ugd/8b422d_de0b139a11174f319c11751a768e98b6.pdf">Brochure Caja</a>
-          <a class="vehicle-link" target="_blank" rel="noopener noreferrer" href="https://www.bpsetruck.com/_files/ugd/8b422d_e1b449fa3c754a9ca476e9319dec84a2.pdf">Brochure Plataforma</a>
-        </div>
-      </div>
-
-      <div class="vehicle-card">
-        <div class="vehicle-img">
-          <canvas id="card-canvas-3"></canvas>
-          <span class="vehicle-badge" style="background:rgba(0,153,255,0.15);border-color:rgba(0,153,255,0.3);color:var(--accent2)">Disponible</span>
-        </div>
-        <div class="vehicle-name">X7</div>
-        <div class="vehicle-type">Mediano eléctrico · Chasis / Caja seca / Plataforma</div>
-        <div class="vehicle-specs">
-          <div><div class="spec-val">170-230 km</div><div class="spec-key">Autonomía</div></div>
-          <div><div class="spec-val">850-1110 kg</div><div class="spec-key">Carga útil</div></div>
-          <div><div class="spec-val">28.8 kWh</div><div class="spec-key">Batería</div></div>
-          <div><div class="spec-val">60 kW</div><div class="spec-key">Potencia</div></div>
-        </div>
-        <div class="vehicle-links">
-          <a class="vehicle-link" target="_blank" rel="noopener noreferrer" href="https://www.bpsetruck.com/_files/ugd/8b422d_6f4d7b527d0a49929d2b4c3b621b0b96.pdf">Brochure Chasis</a>
-          <a class="vehicle-link" target="_blank" rel="noopener noreferrer" href="https://www.bpsetruck.com/_files/ugd/8b422d_fb6dccdf126646da85dc586d60e59ce6.pdf">Brochure Caja</a>
-          <a class="vehicle-link" target="_blank" rel="noopener noreferrer" href="https://www.bpsetruck.com/_files/ugd/8b422d_fe6aac6da6cc465cb2545581a3ab4ade.pdf">Brochure Plataforma</a>
-        </div>
-      </div>
-
-      <div class="vehicle-card">
-        <div class="vehicle-img">
-          <canvas id="card-canvas-4"></canvas>
-          <span class="vehicle-badge" style="background:rgba(255,140,66,0.14);border-color:rgba(255,140,66,0.3);color:#FFB36E">Disponible</span>
-        </div>
-        <div class="vehicle-name">MAXENCE</div>
-        <div class="vehicle-type">Pesado eléctrico · Caja seca / Plataforma / Chasis</div>
-        <div class="vehicle-specs">
-          <div><div class="spec-val">240-270 km</div><div class="spec-key">Autonomía</div></div>
-          <div><div class="spec-val">1,550 kg</div><div class="spec-key">Carga útil</div></div>
-          <div><div class="spec-val">41.86 kWh</div><div class="spec-key">Batería</div></div>
-          <div><div class="spec-val">60 kW</div><div class="spec-key">Potencia</div></div>
-        </div>
-        <div class="vehicle-links">
-          <a class="vehicle-link" target="_blank" rel="noopener noreferrer" href="https://www.bpsetruck.com/_files/ugd/8b422d_e3208168649b4a6c97278ac2d179c6dd.pdf">Brochure Maxence</a>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="tech-specs">
-      <article class="tech-card">
-        <h3>V2 · Ficha técnica</h3>
-        <p class="tech-meta">Configuración principal</p>
-        <div class="tech-list">
-          <div class="tech-row"><span class="tech-key">Dimensiones</span><span class="tech-val">3.49 x 1.47 x 1.69 m</span></div>
-          <div class="tech-row"><span class="tech-key">Capacidad</span><span class="tech-val">700 kg · 2 asientos · 2.6 m3</span></div>
-          <div class="tech-row"><span class="tech-key">Batería</span><span class="tech-val">LFP · 17.88 kWh</span></div>
-          <div class="tech-row"><span class="tech-key">Autonomía</span><span class="tech-val">150-180 km (CLTC)</span></div>
-          <div class="tech-row"><span class="tech-key">Carga</span><span class="tech-val">AC 5-7 h · DC 20%-80% en 45 min</span></div>
-          <div class="tech-row"><span class="tech-key">Tren motriz</span><span class="tech-val">Motor síncrono · 30 kW · 80 km/h</span></div>
+        <div class="veh-foot">
+          <a class="veh-link" href="#specs" data-goto="V2">Ver ficha técnica <span class="ar">→</span></a>
         </div>
       </article>
 
-      <article class="tech-card">
-        <h3>1500 · Ficha técnica real</h3>
-        <p class="tech-meta">Variantes: Chasis, Caja seca y Plataforma</p>
-        <div class="tech-list">
-          <div class="tech-row"><span class="tech-key">Dimensiones</span><span class="tech-val">4.20 x 1.57 x 1.69 m (chasis)<br/>4.20 x 1.57 x 2.04 m (caja)<br/>4.20 x 1.46 x 1.68 m (plataforma)</span></div>
-          <div class="tech-row"><span class="tech-key">Capacidad</span><span class="tech-val">650-730 kg · 2 asientos · hasta 4.4 m3</span></div>
-          <div class="tech-row"><span class="tech-key">Batería</span><span class="tech-val">LFP · 20.72 kWh</span></div>
-          <div class="tech-row"><span class="tech-key">Autonomía</span><span class="tech-val">170-200 km (CLTC)</span></div>
-          <div class="tech-row"><span class="tech-key">Carga</span><span class="tech-val">AC 6-8 h · DC no aplica</span></div>
-          <div class="tech-row"><span class="tech-key">Tren motriz</span><span class="tech-val">Motor síncrono · 20 kW · 77 km/h</span></div>
+      <!-- 1500 -->
+      <article class="veh-card reveal">
+        <div class="veh-top">
+          <div>
+            <div class="veh-name">1500</div>
+            <div class="veh-class">Carga eléctrica · Chasis / Caja / Plataforma</div>
+          </div>
+          <span class="tag">Disponible</span>
+        </div>
+        <div class="veh-img-wrap">
+          <img src="assets/1500.png" alt="IBS 1500" loading="lazy" />
+        </div>
+        <div class="veh-specs">
+          <div class="vs"><div class="k">Autonomía</div><div class="v">170–200<span style="font-size:.6em"> km</span></div></div>
+          <div class="vs"><div class="k">Carga útil</div><div class="v">650–730<span style="font-size:.6em"> kg</span></div></div>
+          <div class="vs"><div class="k">Batería</div><div class="v">20.72<span style="font-size:.6em"> kWh</span></div></div>
+          <div class="vs"><div class="k">Potencia</div><div class="v">20<span style="font-size:.6em"> kW</span></div></div>
+        </div>
+        <div class="veh-foot">
+          <a class="veh-link" href="#specs" data-goto="1500">Ver ficha técnica <span class="ar">→</span></a>
         </div>
       </article>
 
-      <article class="tech-card">
-        <h3>X7 · Ficha técnica real</h3>
-        <p class="tech-meta">Variantes: Chasis, Caja seca y Plataforma</p>
-        <div class="tech-list">
-          <div class="tech-row"><span class="tech-key">Dimensiones</span><span class="tech-val">4.40 x 1.57 x 2.40 m (chasis)<br/>4.20 x 1.57 x 1.69 m (caja)<br/>4.20 x 1.46 x 1.68 m (plataforma)</span></div>
-          <div class="tech-row"><span class="tech-key">Capacidad</span><span class="tech-val">850-1110 kg · 2 asientos · hasta 6 m3</span></div>
-          <div class="tech-row"><span class="tech-key">Batería</span><span class="tech-val">LFP · 28.8 kWh</span></div>
-          <div class="tech-row"><span class="tech-key">Autonomía</span><span class="tech-val">170-230 km (CLTC)</span></div>
-          <div class="tech-row"><span class="tech-key">Carga</span><span class="tech-val">AC 8-10 h · DC 20%-80% en 45 min o 1 h según versión</span></div>
-          <div class="tech-row"><span class="tech-key">Tren motriz</span><span class="tech-val">Motor síncrono · 60 kW · 85 km/h</span></div>
+      <!-- X7 -->
+      <article class="veh-card reveal">
+        <div class="veh-top">
+          <div>
+            <div class="veh-name">X7</div>
+            <div class="veh-class">Mediano eléctrico · Chasis / Caja / Plataforma</div>
+          </div>
+          <span class="tag">Disponible</span>
+        </div>
+        <div class="veh-img-wrap">
+          <img src="assets/x7.png" alt="IBS X7" loading="lazy" />
+        </div>
+        <div class="veh-specs">
+          <div class="vs"><div class="k">Autonomía</div><div class="v">170–230<span style="font-size:.6em"> km</span></div></div>
+          <div class="vs"><div class="k">Carga útil</div><div class="v">850–1110<span style="font-size:.6em"> kg</span></div></div>
+          <div class="vs"><div class="k">Batería</div><div class="v">28.8<span style="font-size:.6em"> kWh</span></div></div>
+          <div class="vs"><div class="k">Potencia</div><div class="v">60<span style="font-size:.6em"> kW</span></div></div>
+        </div>
+        <div class="veh-foot">
+          <a class="veh-link" href="#specs" data-goto="X7">Ver ficha técnica <span class="ar">→</span></a>
         </div>
       </article>
 
-      <article class="tech-card">
-        <h3>MAXENCE · Ficha técnica</h3>
-        <p class="tech-meta">Configuración principal</p>
-        <div class="tech-list">
-          <div class="tech-row"><span class="tech-key">Dimensiones</span><span class="tech-val">4.86 x 1.75 x 1.99 m</span></div>
-          <div class="tech-row"><span class="tech-key">Capacidad</span><span class="tech-val">1550 kg · 2 asientos · 6.2 m3</span></div>
-          <div class="tech-row"><span class="tech-key">Batería</span><span class="tech-val">LFP · 41.86 kWh</span></div>
-          <div class="tech-row"><span class="tech-key">Autonomía</span><span class="tech-val">240-270 km (CLTC)</span></div>
-          <div class="tech-row"><span class="tech-key">Carga</span><span class="tech-val">AC 14 h · DC 20%-80% en 1h 30m</span></div>
-          <div class="tech-row"><span class="tech-key">Tren motriz</span><span class="tech-val">Motor síncrono · 60 kW · 100 km/h</span></div>
+      <!-- MAXENCE -->
+      <article class="veh-card reveal">
+        <div class="veh-top">
+          <div>
+            <div class="veh-name">Maxence</div>
+            <div class="veh-class">Pesado eléctrico · Caja / Plataforma / Chasis</div>
+          </div>
+          <span class="tag">Disponible</span>
+        </div>
+        <div class="veh-img-wrap">
+          <img src="assets/maxence.png" alt="IBS Maxence" loading="lazy" />
+        </div>
+        <div class="veh-specs">
+          <div class="vs"><div class="k">Autonomía</div><div class="v">240–270<span style="font-size:.6em"> km</span></div></div>
+          <div class="vs"><div class="k">Carga útil</div><div class="v">1,550<span style="font-size:.6em"> kg</span></div></div>
+          <div class="vs"><div class="k">Batería</div><div class="v">41.86<span style="font-size:.6em"> kWh</span></div></div>
+          <div class="vs"><div class="k">Potencia</div><div class="v">60<span style="font-size:.6em"> kW</span></div></div>
+        </div>
+        <div class="veh-foot">
+          <a class="veh-link" href="#specs" data-goto="Maxence">Ver ficha técnica <span class="ar">→</span></a>
         </div>
       </article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- COVERAGE -->
-  <section class="coverage" id="cobertura">
-    <div class="section-header">
-      <div>
-        <div class="section-tag">Cobertura inicial</div>
-        <h2 class="section-title">Presencia en México</h2>
-        <p class="section-note">Mapa operativo con ciudades activas para despliegue de flota IBS.</p>
+<!-- SPEC EXPLORER -->
+<section class="band band-dark" id="specs">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="l reveal">
+        <span class="eyebrow">Ficha técnica</span>
+        <h2 class="section-title">Ingeniería,<br>al detalle.</h2>
       </div>
-      <a href="#contacto" class="btn-outline">Expandir cobertura →</a>
+      <p class="lede reveal">Selecciona un modelo para explorar dimensiones, tren motriz y tiempos de carga. Datos reales de brochure oficial.</p>
     </div>
-    <div class="coverage-grid">
-      <div class="map-shell">
-        <svg class="mx-svg" viewBox="0 0 620 420" role="img" aria-label="Mapa de México con Tepic y Vallarta señalados">
-          <defs>
-            <radialGradient id="mxGlow" cx="50%" cy="52%" r="52%">
-              <stop offset="0%" stop-color="#00E5A0"/>
-              <stop offset="100%" stop-color="#00E5A0" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
-          <path class="mx-glow" d="M 403.04 166.85 L 395.57 183.76 L 392.20 197.62 L 390.79 223.43 L 388.93 232.84 L 392.27 243.35 L 398.25 252.74 L 402.09 267.68 L 414.88 282.03 L 419.38 293.02 L 426.91 302.50 L 447.37 307.61 L 455.33 315.67 L 472.23 310.29 L 486.91 308.34 L 501.34 304.88 L 513.46 301.58 L 525.72 293.72 L 530.31 282.48 L 531.89 266.30 L 535.22 260.66 L 548.27 255.62 L 568.64 251.15 L 585.69 251.82 L 597.38 250.19 L 602.00 254.27 L 601.35 263.55 L 590.99 275.00 L 586.41 286.73 L 589.96 290.09 L 587.08 298.42 L 582.25 313.45 L 577.37 308.50 L 573.33 308.82 L 569.67 309.07 L 562.77 320.70 L 559.28 318.42 L 556.94 319.31 L 557.09 322.14 L 539.28 321.93 L 521.29 321.97 L 521.28 332.81 L 512.58 332.86 L 519.75 339.29 L 526.87 343.74 L 529.01 347.91 L 532.13 349.08 L 531.64 355.64 L 506.91 355.70 L 497.64 371.40 L 500.38 375.00 L 498.14 379.52 L 497.67 385.13 L 475.87 364.39 L 465.94 358.13 L 450.21 353.11 L 439.45 354.51 L 423.97 361.76 L 414.26 363.65 L 400.66 358.58 L 386.22 354.91 L 368.22 346.08 L 353.78 343.38 L 331.97 334.42 L 315.85 325.21 L 310.99 320.07 L 300.21 318.92 L 280.50 312.82 L 272.48 304.03 L 251.78 293.10 L 242.13 280.95 L 237.54 271.56 L 243.97 269.68 L 241.98 264.19 L 246.41 259.19 L 246.51 252.53 L 240.01 243.88 L 238.27 236.21 L 231.81 226.49 L 214.83 207.34 L 195.47 192.29 L 186.09 180.29 L 169.56 172.42 L 166.02 167.71 L 168.95 155.81 L 159.13 151.32 L 147.76 141.95 L 142.96 128.51 L 132.60 126.95 L 121.41 116.80 L 112.38 107.43 L 111.54 101.41 L 101.18 86.88 L 94.36 72.13 L 94.65 64.73 L 80.72 57.09 L 74.29 57.93 L 63.30 52.62 L 60.21 60.44 L 63.40 69.69 L 65.27 84.15 L 71.88 92.09 L 86.17 105.36 L 89.35 109.90 L 92.28 111.27 L 94.82 117.89 L 98.24 117.62 L 102.11 130.05 L 107.96 134.95 L 112.06 141.77 L 124.17 151.57 L 130.56 169.49 L 136.28 177.93 L 141.63 186.96 L 142.69 197.12 L 151.98 197.75 L 159.70 206.51 L 166.69 215.11 L 166.22 218.56 L 158.12 225.63 L 154.70 225.54 L 149.62 213.83 L 137.02 202.85 L 123.13 193.54 L 113.27 188.64 L 113.91 174.55 L 110.99 164.11 L 101.81 158.14 L 88.57 149.54 L 86.02 152.02 L 81.16 147.00 L 69.28 142.34 L 57.93 131.15 L 59.33 129.70 L 67.27 130.79 L 74.41 123.60 L 75.13 114.91 L 60.30 101.17 L 49.00 95.83 L 41.89 83.80 L 34.75 71.17 L 25.83 55.77 L 18.00 38.45 L 39.89 36.96 L 64.36 34.87 L 62.55 38.64 L 91.64 48.00 L 135.59 61.57 L 173.90 61.43 L 189.18 61.43 L 189.21 53.48 L 222.59 53.49 L 229.61 60.32 L 239.46 66.41 L 250.91 74.88 L 257.30 84.94 L 262.09 95.53 L 272.05 101.35 L 288.04 107.13 L 300.17 91.91 L 315.92 91.54 L 329.50 99.22 L 339.17 112.40 L 345.83 123.69 L 357.19 134.67 L 361.43 148.16 L 366.83 157.21 L 381.85 163.19 L 395.53 167.42 L 403.04 166.85 Z"/>
-          <path class="mx-outline" d="M 403.04 166.85 L 395.57 183.76 L 392.20 197.62 L 390.79 223.43 L 388.93 232.84 L 392.27 243.35 L 398.25 252.74 L 402.09 267.68 L 414.88 282.03 L 419.38 293.02 L 426.91 302.50 L 447.37 307.61 L 455.33 315.67 L 472.23 310.29 L 486.91 308.34 L 501.34 304.88 L 513.46 301.58 L 525.72 293.72 L 530.31 282.48 L 531.89 266.30 L 535.22 260.66 L 548.27 255.62 L 568.64 251.15 L 585.69 251.82 L 597.38 250.19 L 602.00 254.27 L 601.35 263.55 L 590.99 275.00 L 586.41 286.73 L 589.96 290.09 L 587.08 298.42 L 582.25 313.45 L 577.37 308.50 L 573.33 308.82 L 569.67 309.07 L 562.77 320.70 L 559.28 318.42 L 556.94 319.31 L 557.09 322.14 L 539.28 321.93 L 521.29 321.97 L 521.28 332.81 L 512.58 332.86 L 519.75 339.29 L 526.87 343.74 L 529.01 347.91 L 532.13 349.08 L 531.64 355.64 L 506.91 355.70 L 497.64 371.40 L 500.38 375.00 L 498.14 379.52 L 497.67 385.13 L 475.87 364.39 L 465.94 358.13 L 450.21 353.11 L 439.45 354.51 L 423.97 361.76 L 414.26 363.65 L 400.66 358.58 L 386.22 354.91 L 368.22 346.08 L 353.78 343.38 L 331.97 334.42 L 315.85 325.21 L 310.99 320.07 L 300.21 318.92 L 280.50 312.82 L 272.48 304.03 L 251.78 293.10 L 242.13 280.95 L 237.54 271.56 L 243.97 269.68 L 241.98 264.19 L 246.41 259.19 L 246.51 252.53 L 240.01 243.88 L 238.27 236.21 L 231.81 226.49 L 214.83 207.34 L 195.47 192.29 L 186.09 180.29 L 169.56 172.42 L 166.02 167.71 L 168.95 155.81 L 159.13 151.32 L 147.76 141.95 L 142.96 128.51 L 132.60 126.95 L 121.41 116.80 L 112.38 107.43 L 111.54 101.41 L 101.18 86.88 L 94.36 72.13 L 94.65 64.73 L 80.72 57.09 L 74.29 57.93 L 63.30 52.62 L 60.21 60.44 L 63.40 69.69 L 65.27 84.15 L 71.88 92.09 L 86.17 105.36 L 89.35 109.90 L 92.28 111.27 L 94.82 117.89 L 98.24 117.62 L 102.11 130.05 L 107.96 134.95 L 112.06 141.77 L 124.17 151.57 L 130.56 169.49 L 136.28 177.93 L 141.63 186.96 L 142.69 197.12 L 151.98 197.75 L 159.70 206.51 L 166.69 215.11 L 166.22 218.56 L 158.12 225.63 L 154.70 225.54 L 149.62 213.83 L 137.02 202.85 L 123.13 193.54 L 113.27 188.64 L 113.91 174.55 L 110.99 164.11 L 101.81 158.14 L 88.57 149.54 L 86.02 152.02 L 81.16 147.00 L 69.28 142.34 L 57.93 131.15 L 59.33 129.70 L 67.27 130.79 L 74.41 123.60 L 75.13 114.91 L 60.30 101.17 L 49.00 95.83 L 41.89 83.80 L 34.75 71.17 L 25.83 55.77 L 18.00 38.45 L 39.89 36.96 L 64.36 34.87 L 62.55 38.64 L 91.64 48.00 L 135.59 61.57 L 173.90 61.43 L 189.18 61.43 L 189.21 53.48 L 222.59 53.49 L 229.61 60.32 L 239.46 66.41 L 250.91 74.88 L 257.30 84.94 L 262.09 95.53 L 272.05 101.35 L 288.04 107.13 L 300.17 91.91 L 315.92 91.54 L 329.50 99.22 L 339.17 112.40 L 345.83 123.69 L 357.19 134.67 L 361.43 148.16 L 366.83 157.21 L 381.85 163.19 L 395.53 167.42 L 403.04 166.85 Z"/>
 
-          <g class="city-marker tepic">
-            <circle class="city-pulse" cx="253.68" cy="250.92" r="2.8"/>
-            <circle cx="253.68" cy="250.92" r="4.6"/>
-            <line class="city-line" x1="258.2" y1="247.9" x2="322" y2="226"/>
-            <text class="city-label" x="326" y="222">Tepic</text>
-            <text class="city-label-sub" x="326" y="236">Nayarit</text>
-          </g>
+    <div class="spec-tabs reveal">
+      <button class="spec-tab active" data-model="V2">V2</button>
+      <button class="spec-tab" data-model="1500">1500</button>
+      <button class="spec-tab" data-model="X7">X7</button>
+      <button class="spec-tab" data-model="Maxence">Maxence</button>
+    </div>
 
-          <g class="city-marker vallarta">
-            <circle class="city-pulse vallarta" cx="247.20" cy="267.34" r="2.8"/>
-            <circle cx="247.20" cy="267.34" r="4.6"/>
-            <line class="city-line" x1="251.6" y1="270.2" x2="334" y2="286"/>
-            <text class="city-label" x="338" y="282">Vallarta</text>
-            <text class="city-label-sub" x="338" y="296">Jalisco</text>
-          </g>
+    <!-- V2 -->
+    <div class="spec-panel active" data-panel="V2">
+      <div class="spec-stage"><span class="spec-watermark">V2</span><img src="assets/v2.png" alt="IBS V2" loading="lazy"></div>
+      <div class="spec-info">
+        <div class="cls">Ligero eléctrico</div>
+        <h3>V2</h3>
+        <div class="spec-rows">
+          <div class="spec-row"><div class="k">Dimensiones</div><div class="v">3.49 × 1.47 × 1.69 m</div></div>
+          <div class="spec-row"><div class="k">Capacidad</div><div class="v">700 kg · 2 asientos · 2.6 m³</div></div>
+          <div class="spec-row"><div class="k">Batería</div><div class="v">LFP · 17.88 kWh</div></div>
+          <div class="spec-row"><div class="k">Autonomía</div><div class="v">150–180 km (CLTC)</div></div>
+          <div class="spec-row"><div class="k">Carga</div><div class="v">AC 5–7 h · DC 20–80 % en 45 min</div></div>
+          <div class="spec-row"><div class="k">Tren motriz</div><div class="v">Motor síncrono · 30 kW · 80 km/h</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1500 -->
+    <div class="spec-panel" data-panel="1500">
+      <div class="spec-stage"><span class="spec-watermark">1500</span><img src="assets/1500.png" alt="IBS 1500" loading="lazy"></div>
+      <div class="spec-info">
+        <div class="cls">Carga eléctrica · 3 variantes</div>
+        <h3>1500</h3>
+        <div class="spec-rows">
+          <div class="spec-row"><div class="k">Dimensiones</div><div class="v">4.20 × 1.57 × 1.69 m (chasis) · hasta 2.04 m alto (caja)</div></div>
+          <div class="spec-row"><div class="k">Capacidad</div><div class="v">650–730 kg · 2 asientos · hasta 4.4 m³</div></div>
+          <div class="spec-row"><div class="k">Batería</div><div class="v">LFP · 20.72 kWh</div></div>
+          <div class="spec-row"><div class="k">Autonomía</div><div class="v">170–200 km (CLTC)</div></div>
+          <div class="spec-row"><div class="k">Carga</div><div class="v">AC 6–8 h</div></div>
+          <div class="spec-row"><div class="k">Tren motriz</div><div class="v">Motor síncrono · 20 kW · 77 km/h</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- X7 -->
+    <div class="spec-panel" data-panel="X7">
+      <div class="spec-stage"><span class="spec-watermark">X7</span><img src="assets/x7.png" alt="IBS X7" loading="lazy"></div>
+      <div class="spec-info">
+        <div class="cls">Mediano eléctrico · 3 variantes</div>
+        <h3>X7</h3>
+        <div class="spec-rows">
+          <div class="spec-row"><div class="k">Dimensiones</div><div class="v">4.40 × 1.57 × 2.40 m (chasis)</div></div>
+          <div class="spec-row"><div class="k">Capacidad</div><div class="v">850–1110 kg · 2 asientos · hasta 6 m³</div></div>
+          <div class="spec-row"><div class="k">Batería</div><div class="v">LFP · 28.8 kWh</div></div>
+          <div class="spec-row"><div class="k">Autonomía</div><div class="v">170–230 km (CLTC)</div></div>
+          <div class="spec-row"><div class="k">Carga</div><div class="v">AC 8–10 h · DC 20–80 % en 45 min–1 h</div></div>
+          <div class="spec-row"><div class="k">Tren motriz</div><div class="v">Motor síncrono · 60 kW · 85 km/h</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAXENCE -->
+    <div class="spec-panel" data-panel="Maxence">
+      <div class="spec-stage"><span class="spec-watermark">MAX</span><img src="assets/maxence.png" alt="IBS Maxence" loading="lazy"></div>
+      <div class="spec-info">
+        <div class="cls">Pesado eléctrico · Flagship</div>
+        <h3>Maxence</h3>
+        <div class="spec-rows">
+          <div class="spec-row"><div class="k">Dimensiones</div><div class="v">4.86 × 1.75 × 1.99 m</div></div>
+          <div class="spec-row"><div class="k">Capacidad</div><div class="v">1,550 kg · 2 asientos · 6.2 m³</div></div>
+          <div class="spec-row"><div class="k">Batería</div><div class="v">LFP · 41.86 kWh</div></div>
+          <div class="spec-row"><div class="k">Autonomía</div><div class="v">240–270 km (CLTC)</div></div>
+          <div class="spec-row"><div class="k">Carga</div><div class="v">AC 14 h · DC 20–80 % en 1 h 30 min</div></div>
+          <div class="spec-row"><div class="k">Tren motriz</div><div class="v">Motor síncrono · 60 kW · 100 km/h</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COVERAGE -->
+<section class="band band-dark" id="cobertura" style="background:var(--ink-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="l reveal">
+        <span class="eyebrow">Cobertura inicial</span>
+        <h2 class="section-title">Presencia<br>en México</h2>
+      </div>
+      <p class="lede reveal">Nodos operativos activos para despliegue y soporte de flota. Expandiéndonos hacia nuevos corredores logísticos.</p>
+    </div>
+
+    <div class="cov-grid">
+      <div class="map reveal">
+        <svg viewBox="0 0 400 340" preserveAspectRatio="xMidYMid meet">
+          <path class="mx-path" d="M60,70 L120,55 L160,75 L210,60 L250,80 L300,70 L330,110 L340,150 L320,180 L300,210 L280,250 L250,285 L220,300 L200,275 L185,240 L160,215 L140,190 L110,175 L90,150 L70,120 Z"/>
         </svg>
+        <!-- Tepic -->
+        <div class="pin" style="left:34%;top:52%"><div class="ring"></div><div class="lbl">Tepic</div></div>
+        <!-- Vallarta -->
+        <div class="pin" style="left:30%;top:64%"><div class="ring"></div><div class="lbl">Vallarta</div></div>
       </div>
 
-      <div class="coverage-cities">
-        <article class="coverage-city">
-          <h3>Tepic</h3>
-          <p>Nayarit · Nodo estratégico para distribución regional y operaciones de última milla.</p>
-          <span class="coverage-chip">Operación activa</span>
-        </article>
-        <article class="coverage-city">
-          <h3>Vallarta</h3>
-          <p>Jalisco · Cobertura urbana y turística para entregas de alta frecuencia.</p>
-          <span class="coverage-chip vallarta">Operación activa</span>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section class="features" id="features">
-    <div class="features-visual">
-      <div class="ring"></div>
-      <div class="ring"></div>
-      <div class="ring"></div>
-      <div class="ring"></div>
-      <div class="center-icon">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round">
-          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-        </svg>
-      </div>
-    </div>
-    <div>
-      <div class="section-tag">Plataforma IBS</div>
-      <h2 class="section-title" style="margin-bottom:3rem">Tecnología que<br/>trabaja por ti</h2>
-      <div class="features-list">
-        <div class="feature-item">
-          <div class="feature-num">01</div>
+      <div class="cov-list reveal">
+        <div class="cov-item">
+          <div class="idx">01</div>
           <div>
-            <div class="feature-title">Telemetría en tiempo real</div>
-            <div class="feature-desc">Monitorea cada vehículo de tu flota — batería, ubicación, temperatura y rendimiento — desde un solo dashboard.</div>
+            <h3>Tepic</h3>
+            <p>Nayarit · Nodo estratégico para distribución regional y operaciones de última milla.</p>
+            <span class="cov-status">Operación activa</span>
           </div>
         </div>
-        <div class="feature-item">
-          <div class="feature-num">02</div>
+        <div class="cov-item">
+          <div class="idx">02</div>
           <div>
-            <div class="feature-title">Gestión de carga inteligente</div>
-            <div class="feature-desc">Optimiza los ciclos de carga según el horario de operación y las tarifas eléctricas de tu zona.</div>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-num">03</div>
-          <div>
-            <div class="feature-title">Mantenimiento predictivo</div>
-            <div class="feature-desc">Alertas anticipadas basadas en datos de uso para prevenir fallas antes de que ocurran.</div>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-num">04</div>
-          <div>
-            <div class="feature-title">Reportes de sustentabilidad</div>
-            <div class="feature-desc">Calcula y certifica automáticamente la reducción de CO₂ de tu operación para reportes ESG.</div>
+            <h3>Vallarta</h3>
+            <p>Jalisco · Cobertura urbana y turística para entregas de alta frecuencia.</p>
+            <span class="cov-status">Operación activa</span>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CTA -->
-  <section class="cta-section" id="contacto">
-    <h2 class="cta-title">¿Listo para<br/><span class="accent">electrificar</span><br/>tu flota?</h2>
-    <p class="cta-sub">Agenda una demostración y descubre cuánto puede ahorrar tu operación con vehículos eléctricos de última milla.</p>
-    <a href="mailto:hola@ibs.roca.ventures" class="btn-primary">Agendar demo →</a>
-  </section>
+<!-- TECH -->
+<section class="band band-light" id="tecnologia">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="l reveal">
+        <span class="eyebrow">Plataforma IBS</span>
+        <h2 class="section-title">Tecnología que<br>trabaja por ti</h2>
+      </div>
+      <p class="lede reveal">Cada vehículo es también un nodo de datos. Control total de tu operación desde un solo panel.</p>
+    </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">IBS</div>
-    <div class="footer-copy">© 2026 · ibs.roca.ventures</div>
-  </footer>
+    <div class="tech-grid reveal">
+      <div class="tech-cell">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h4l2 6 4-14 2 8h6"/></svg>
+        <div class="tech-num">01</div>
+        <h3>Telemetría en tiempo real</h3>
+        <p>Monitorea cada vehículo — batería, ubicación, temperatura y rendimiento — desde un solo dashboard.</p>
+      </div>
+      <div class="tech-cell">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+        <div class="tech-num">02</div>
+        <h3>Gestión de carga inteligente</h3>
+        <p>Optimiza los ciclos de carga según el horario de operación y las tarifas eléctricas de tu zona.</p>
+      </div>
+      <div class="tech-cell">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"/><circle cx="12" cy="12" r="3"/></svg>
+        <div class="tech-num">03</div>
+        <h3>Mantenimiento predictivo</h3>
+        <p>Alertas anticipadas basadas en datos de uso para prevenir fallas antes de que ocurran.</p>
+      </div>
+      <div class="tech-cell">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        <div class="tech-num">04</div>
+        <h3>Reportes de sustentabilidad</h3>
+        <p>Calcula y certifica automáticamente la reducción de CO₂ de tu operación para reportes ESG.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <script>
-    const VEHICLE_ASSETS = {
-      v2: {
-        image: 'assets/models/v2.png'
-      },
-      '1500': {
-        image: 'assets/models/1500.png'
-      },
-      x7: {
-        image: 'assets/models/x7.png'
-      },
-      maxence: {
-        image: 'assets/models/maxence.png'
-      }
-    };
+<!-- CTA -->
+<section class="band band-light" id="contacto" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta reveal">
+      <div class="cta-inner">
+        <span class="eyebrow center" style="color:var(--accent-sky)">Da el siguiente paso</span>
+        <h2 style="margin-top:18px">¿Listo para<br>electrificar tu flota?</h2>
+        <p>Agenda una demostración y descubre cuánto puede ahorrar tu operación con vehículos eléctricos de última milla.</p>
+        <div class="cta-actions">
+          <a href="mailto:hola@ibs.roca.ventures" class="btn btn-invert">Agendar demo <span class="ar">→</span></a>
+          <a href="mailto:hola@ibs.roca.ventures" class="btn btn-ghost-invert">Solicitar cotización</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    function setStaticVehicleImage(canvasId, modelKey) {
-      const canvas = document.getElementById(canvasId);
-      if (!canvas) return;
-      const parent = canvas.parentElement;
-      const cfg = VEHICLE_ASSETS[modelKey] || VEHICLE_ASSETS.v2;
-      parent.classList.add('is-static');
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="#top" class="brand"><span class="dot"></span>IBS</a>
+        <p>Intelligent Battery Systems. Soluciones de movilidad eléctrica para flotas de última milla en México.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Flota</h4>
+          <a href="#flota">V2 Ligero</a>
+          <a href="#flota">1500 Carga</a>
+          <a href="#flota">X7 Mediano</a>
+          <a href="#flota">Maxence Pesado</a>
+        </div>
+        <div class="foot-col">
+          <h4>Empresa</h4>
+          <a href="#cobertura">Cobertura</a>
+          <a href="#tecnologia">Tecnología</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+        <div class="foot-col">
+          <h4>Contacto</h4>
+          <a href="mailto:hola@ibs.roca.ventures">hola@ibs.roca.ventures</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 IBS · ibs.roca.ventures</span>
+      <span>Movilidad sin emisiones. Sin límites.</span>
+    </div>
+  </div>
+</footer>
 
-      let img = parent.querySelector('.vehicle-static-photo');
-      if (!img) {
-        img = document.createElement('img');
-        img.className = 'vehicle-static-photo';
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        parent.prepend(img);
-      }
-      img.src = cfg.image;
-      img.alt = `Modelo ${modelKey.toUpperCase()}`;
-    }
+<script>
+  // sticky nav
+  const hdr=document.getElementById('hdr');
+  addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>20));
 
-    window.addEventListener('load', () => {
-      setStaticVehicleImage('card-canvas-1', 'v2');
-      setStaticVehicleImage('card-canvas-2', '1500');
-      setStaticVehicleImage('card-canvas-3', 'x7');
-      setStaticVehicleImage('card-canvas-4', 'maxence');
-    });
-  </script>
+  // mobile menu
+  const mb=document.getElementById('menuBtn'),mm=document.getElementById('mobileMenu');
+  mb&&mb.addEventListener('click',()=>mm.classList.toggle('open'));
+  mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mm.classList.remove('open')));
+
+  // reveal on scroll
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3*70)+'ms';io.observe(el)});
+
+  // spec tabs
+  const tabs=document.querySelectorAll('.spec-tab'),panels=document.querySelectorAll('.spec-panel');
+  function showModel(m){
+    tabs.forEach(t=>t.classList.toggle('active',t.dataset.model===m));
+    panels.forEach(p=>p.classList.toggle('active',p.dataset.panel===m));
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>showModel(t.dataset.model)));
+  document.querySelectorAll('[data-goto]').forEach(a=>a.addEventListener('click',()=>showModel(a.dataset.goto)));
+</script>
 </body>
 </html>
