@@ -94,6 +94,7 @@
   .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
   .hero-stage{position:relative;margin-top:20px}
   .hero-veh{width:100%;max-width:1180px;margin:0 auto;mix-blend-mode:multiply;filter:var(--shadow-veh)}
+  .hero-veh-3d{width:100%;max-width:1040px;height:clamp(320px,44vw,520px);margin:0 auto;display:block;background:transparent;--poster-color:transparent}
   .hero-floor{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:66%;height:60px;background:radial-gradient(ellipse at center,rgba(8,14,24,.20),transparent 70%);filter:blur(6px);z-index:0}
   .badge-float{position:absolute;top:8%;right:2%;background:rgba(255,255,255,.7);backdrop-filter:blur(10px);border:1px solid var(--line-light);border-radius:14px;padding:14px 18px;box-shadow:0 20px 40px rgba(8,14,24,.10)}
   .badge-float .k{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
@@ -260,6 +261,7 @@
   .mobile-menu a{font-family:"Archivo",sans-serif;font-weight:800;font-size:34px;letter-spacing:-.02em;padding:10px 0;color:var(--text-dark)}
   .mobile-menu .btn{margin-top:24px;align-self:flex-start}
 </style>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 </head>
 <body>
 
@@ -306,8 +308,7 @@
 
   <div class="wrap">
     <div class="hero-stage reveal">
-      <div class="hero-floor"></div>
-      <img class="hero-veh" src="assets/maxence.png" alt="IBS Maxence — vehículo eléctrico pesado">
+      <model-viewer class="hero-veh-3d" src="assets/3d/maxence.glb" poster="assets/maxence.png" alt="IBS Maxence — modelo 3D interactivo" camera-controls auto-rotate auto-rotate-delay="200" rotation-per-second="22deg" interaction-prompt="none" shadow-intensity="1" shadow-softness="1" exposure="1.05" camera-orbit="35deg 80deg 105%" min-camera-orbit="auto 65deg auto" max-camera-orbit="auto 92deg auto" disable-zoom touch-action="pan-y"></model-viewer>
       <div class="badge-float">
         <div class="k">Cobertura</div>
         <div class="v">Tepic, Vallarta 
