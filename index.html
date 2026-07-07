@@ -28,9 +28,9 @@
     --text-mute:#5A6472;
     --text-invert:#EDF1F5;
     --text-invert-mute:#9AA6B4;
-    --accent:#0FB2C2;
-    --accent-bright:#20C6D6;
-    --accent-sky:#9BE4EC;
+    --accent:#10B5A8;
+    --accent-bright:#1ACFBF;
+    --accent-sky:#9DE9E0;
     --sh:#E11D2A;
     --sh-bright:#F5333F;
     --sh-sky:#FBB4B9;
@@ -120,6 +120,7 @@
   .btn-sh{background:var(--sh);color:#fff}
   .btn-sh:hover{background:#C21622;box-shadow:0 10px 30px rgba(225,29,42,.35)}
   .band-sh{--accent:var(--sh);--accent-bright:var(--sh-bright);--accent-sky:var(--sh-sky);background:linear-gradient(180deg,#FFFFFF,#FBF1F1)}
+  .band-ev{background:radial-gradient(120% 100% at 85% 0%,rgba(16,181,168,.13),transparent 55%),linear-gradient(180deg,#FFFFFF,#EAF7F5)}
   .tag.ice{color:var(--text-mute)}
   .tag.ice::before{background:var(--graphite-2);box-shadow:0 0 0 3px rgba(138,147,161,.18)}
   /* brand selector */
@@ -150,8 +151,8 @@
   .tag::before{content:"";width:6px;height:6px;border-radius:50%;background:#1DBB63;box-shadow:0 0 0 3px rgba(29,187,99,.18)}
   .veh-name{font-family:"Archivo",sans-serif;font-weight:900;font-size:40px;letter-spacing:-.03em;line-height:1}
   .veh-class{font-size:13px;color:var(--text-mute);margin-top:6px}
-  .veh-img-wrap{position:relative;height:190px;display:flex;align-items:center;justify-content:center;margin:14px 0 20px;padding:0 6px}
-  .veh-img-wrap img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;filter:drop-shadow(0 20px 16px rgba(8,14,24,.20));transition:transform .6s var(--ease)}
+  .veh-img-wrap{position:relative;height:210px;display:flex;align-items:center;justify-content:center;margin:14px 0 22px}
+  .veh-img-wrap img{max-width:82%;max-height:76%;width:auto;height:auto;object-fit:contain;mix-blend-mode:multiply;filter:drop-shadow(0 22px 18px rgba(8,14,24,.16));transition:transform .6s var(--ease)}
   .veh-card:hover .veh-img-wrap img{transform:scale(1.05)}
   .veh-specs{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-light);border-radius:12px;overflow:hidden;position:relative;z-index:2}
   .vs{background:var(--paper-3);padding:14px 16px}
@@ -491,7 +492,7 @@ Trucks, minitrucks, cargo van y SUV de combustión.</p>
 </section>
 
 <!-- FLEET (ELÉCTRICOS) -->
-<section class="band band-paper3" id="electricos">
+<section class="band band-ev" id="electricos">
   <div class="wrap">
     <div class="sec-head">
       <div class="l reveal">
@@ -605,7 +606,7 @@ Trucks, minitrucks, cargo van y SUV de combustión.</p>
         <span class="eyebrow">Ficha técnica</span>
         <h2 class="section-title">Ingeniería,<br>al detalle.</h2>
       </div>
-      <p class="lede reveal">Selecciona un modelo para explorar dimensiones, tren motriz y tiempos de carga. Datos reales de brochure oficial.</p>
+      <p class="lede reveal">Selecciona un modelo — eléctrico o Shineray — para ver sus datos técnicos oficiales.</p>
     </div>
 
     <div class="spec-tabs reveal">
@@ -613,6 +614,11 @@ Trucks, minitrucks, cargo van y SUV de combustión.</p>
       <button class="spec-tab" data-model="1500">1500</button>
       <button class="spec-tab" data-model="X7">X7</button>
       <button class="spec-tab" data-model="Maxence">Maxence</button>
+      <button class="spec-tab" data-model="T50">T50</button>
+      <button class="spec-tab" data-model="T30">T30</button>
+      <button class="spec-tab" data-model="T32">T32</button>
+      <button class="spec-tab" data-model="X30">X30</button>
+      <button class="spec-tab" data-model="G03F">G03F</button>
     </div>
 
     <!-- V2 -->
@@ -679,6 +685,86 @@ Trucks, minitrucks, cargo van y SUV de combustión.</p>
           <div class="spec-row"><div class="k">Autonomía</div><div class="v">240–270 km (CLTC)</div></div>
           <div class="spec-row"><div class="k">Carga</div><div class="v">AC 14 h · DC 20–80 % en 1 h 30 min</div></div>
           <div class="spec-row"><div class="k">Tren motriz</div><div class="v">Motor síncrono · 60 kW · 100 km/h</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T50 -->
+    <div class="spec-panel" data-panel="T50">
+      <div class="spec-stage"><span class="spec-watermark">T50</span><img src="assets/shineray/t50.png" alt="Shineray T50" loading="lazy"></div>
+      <div class="spec-info">
+        <div class="cls">Shineray · Truck</div>
+        <h3>T50</h3>
+        <div class="spec-rows">
+          <div class="spec-row"><div class="k">Categoría</div><div class="v">Truck de carga</div></div>
+          <div class="spec-row"><div class="k">Carga máx.</div><div class="v">2,370 kg</div></div>
+          <div class="spec-row"><div class="k">Motor</div><div class="v">Gasolina 1.6 L</div></div>
+          <div class="spec-row"><div class="k">Transmisión</div><div class="v">Manual · 5 velocidades</div></div>
+          <div class="spec-row"><div class="k">Rendimiento</div><div class="v">13.03 km/L</div></div>
+          <div class="spec-row"><div class="k">Garantía</div><div class="v">3 años</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T30 -->
+    <div class="spec-panel" data-panel="T30">
+      <div class="spec-stage"><span class="spec-watermark">T30</span><img src="assets/shineray/t30.png" alt="Shineray T30" loading="lazy"></div>
+      <div class="spec-info">
+        <div class="cls">Shineray · Mini Truck</div>
+        <h3>T30</h3>
+        <div class="spec-rows">
+          <div class="spec-row"><div class="k">Categoría</div><div class="v">Mini Truck</div></div>
+          <div class="spec-row"><div class="k">Carga máx.</div><div class="v">1,475 kg</div></div>
+          <div class="spec-row"><div class="k">Motor</div><div class="v">Gasolina 1.6 L</div></div>
+          <div class="spec-row"><div class="k">Rendimiento</div><div class="v">13.23 km/L</div></div>
+          <div class="spec-row"><div class="k">Garantía</div><div class="v">3 años</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T32 -->
+    <div class="spec-panel" data-panel="T32">
+      <div class="spec-stage"><span class="spec-watermark">T32</span><img src="assets/shineray/t32.png" alt="Shineray T32" loading="lazy"></div>
+      <div class="spec-info">
+        <div class="cls">Shineray · Mini Truck</div>
+        <h3>T32</h3>
+        <div class="spec-rows">
+          <div class="spec-row"><div class="k">Categoría</div><div class="v">Mini Truck</div></div>
+          <div class="spec-row"><div class="k">Carga máx.</div><div class="v">1,200 kg</div></div>
+          <div class="spec-row"><div class="k">Motor</div><div class="v">Gasolina 1.5 L</div></div>
+          <div class="spec-row"><div class="k">Transmisión</div><div class="v">Manual · 5 velocidades</div></div>
+          <div class="spec-row"><div class="k">Garantía</div><div class="v">3 años</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- X30 -->
+    <div class="spec-panel" data-panel="X30">
+      <div class="spec-stage"><span class="spec-watermark">X30</span><img src="assets/shineray/x30.png" alt="Shineray X30" loading="lazy"></div>
+      <div class="spec-info">
+        <div class="cls">Shineray · Cargo Van</div>
+        <h3>X30</h3>
+        <div class="spec-rows">
+          <div class="spec-row"><div class="k">Categoría</div><div class="v">Cargo Van</div></div>
+          <div class="spec-row"><div class="k">Carga máx.</div><div class="v">910 kg</div></div>
+          <div class="spec-row"><div class="k">Motor</div><div class="v">Gasolina 1.5 L</div></div>
+          <div class="spec-row"><div class="k">Rendimiento</div><div class="v">15.63 km/L</div></div>
+          <div class="spec-row"><div class="k">Garantía</div><div class="v">3 años</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- G03F -->
+    <div class="spec-panel" data-panel="G03F">
+      <div class="spec-stage"><span class="spec-watermark">G03F</span><img src="assets/shineray/g03f.png" alt="Shineray G03F" loading="lazy"></div>
+      <div class="spec-info">
+        <div class="cls">Shineray · SUV</div>
+        <h3>G03F</h3>
+        <div class="spec-rows">
+          <div class="spec-row"><div class="k">Categoría</div><div class="v">SUV gasolina</div></div>
+          <div class="spec-row"><div class="k">Motor</div><div class="v">1.5 L · aspiración natural</div></div>
+          <div class="spec-row"><div class="k">Transmisión</div><div class="v">Manual · 5 velocidades</div></div>
+          <div class="spec-row"><div class="k">Garantía</div><div class="v">3 años</div></div>
         </div>
       </div>
     </div>
