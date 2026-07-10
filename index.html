@@ -92,10 +92,12 @@
   .hero h1{margin:22px 0 26px}
   .hero .lede{margin-bottom:34px}
   .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
-  .hero-stage{position:relative;margin:26px auto 0;width:min(640px,94%)}
+  .hero-stage{position:relative;margin:26px auto 0;width:min(720px,94%)}
   .hero-veh{width:100%;max-width:100%;margin:0 auto;mix-blend-mode:multiply;filter:var(--shadow-veh)}
   .hero-veh-3d{width:100%;max-width:1040px;height:clamp(320px,44vw,520px);margin:0 auto;display:block;background:transparent;--poster-color:transparent}
   .hero-floor{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:66%;height:60px;background:radial-gradient(ellipse at center,rgba(8,14,24,.20),transparent 70%);filter:blur(6px);z-index:0}
+  .hero-photo{position:relative;width:100%;border-radius:22px;overflow:hidden;aspect-ratio:16/9;background:#e9edf1;border:1px solid rgba(255,255,255,.55);box-shadow:0 34px 70px rgba(8,14,24,.22)}
+  .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;display:block}
   .badge-float{position:absolute;top:2%;right:-4%;max-width:220px;background:rgba(255,255,255,.75);backdrop-filter:blur(10px);border:1px solid var(--line-light);border-radius:14px;padding:12px 15px;box-shadow:0 20px 40px rgba(8,14,24,.10)}
   .badge-float .k{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
   .badge-float .v{font-family:"Archivo",sans-serif;font-weight:800;font-size:18px;margin-top:3px;line-height:1.15}
@@ -307,11 +309,12 @@
 
   <div class="wrap">
     <div class="hero-stage reveal">
-      <div class="hero-floor"></div>
-      <img class="hero-veh" src="assets/shineray/t32.png" alt="Shineray T32 · IBS">
+      <div class="hero-photo">
+        <img src="assets/shineray/t32_frente.png" alt="Shineray T32 · IBS">
+      </div>
       <div class="badge-float">
         <div class="k">Cobertura</div>
-        <div class="v">Tepic, Vallarta 
+        <div class="v">Tepic, Vallarta
 y Guadalajara</div>
       </div>
     </div>
