@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0B1418">
+<title>Fichas Técnicas · IBS</title>
+<meta name="description" content="Especificaciones técnicas de la flota IBS: unidades eléctricas BPS (V2, 1500, X7, Maxence) y de combustión Shineray (T50, T30, T32, X30).">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ev:#0E7490; --ev-soft:rgba(14,116,144,.10);
+    --ice:#C2410C; --ice-soft:rgba(194,65,12,.10);
+    --ink:#0F1720; --mute:#5A6472; --line:#E2E8F0; --paper:#F6F8FA; --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+  body{font-family:"Inter",system-ui,sans-serif;color:var(--ink);line-height:1.5;
+    background:radial-gradient(120% 80% at 85% -5%,rgba(14,116,144,.08),transparent 45%),linear-gradient(180deg,#FFFFFF,#EEF3F5);
+    min-height:100vh;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 clamp(18px,5vw,44px)}
+
+  header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{font-family:"Space Grotesk",sans-serif;font-weight:700;letter-spacing:.06em;font-size:19px;display:inline-flex;align-items:center;gap:9px}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--ev)}
+  .back{font-size:14px;font-weight:500;color:var(--mute);display:inline-flex;align-items:center;gap:7px;transition:.2s}
+  .back:hover{color:var(--ink)}
+
+  .hero{padding:clamp(40px,7vw,72px) 0 clamp(20px,3vw,30px)}
+  .eyebrow{font-family:"Space Grotesk",sans-serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ev);font-weight:600}
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1.02;
+    font-size:clamp(34px,6vw,60px);margin:14px 0 16px}
+  .lede{color:var(--mute);font-size:clamp(15px,1.6vw,18px);max-width:60ch;line-height:1.6}
+
+  .filters{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 6px}
+  .pill{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:13.5px;padding:9px 18px;border-radius:100px;
+    border:1px solid var(--line);background:#fff;color:var(--mute);cursor:pointer;transition:.2s}
+  .pill[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .pill:hover{border-color:var(--ink)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;padding:26px 0 10px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;
+    transition:transform .35s ease,box-shadow .35s ease}
+  .card:hover{transform:translateY(-4px);box-shadow:0 22px 44px rgba(15,23,32,.10)}
+  .card.hide{display:none}
+  .figure{position:relative;padding:26px 24px 8px;background:linear-gradient(180deg,#FBFDFE,#F1F5F7);min-height:150px;display:flex;align-items:flex-end;justify-content:flex-start}
+  .figure img{width:auto;max-width:82%;max-height:118px;object-fit:contain;object-position:left bottom;
+    mix-blend-mode:multiply;filter:drop-shadow(0 14px 14px rgba(15,23,32,.16))}
+  .tag{position:absolute;top:16px;left:16px;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:11px;letter-spacing:.03em;
+    padding:6px 11px;border-radius:100px}
+  .tag.ev{background:var(--ev-soft);color:var(--ev)}
+  .tag.ice{background:var(--ice-soft);color:var(--ice)}
+  .body{padding:18px 22px 22px;display:flex;flex-direction:column;flex:1}
+  .name{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:26px;letter-spacing:-.01em;line-height:1}
+  .cat{font-size:13px;color:var(--mute);margin:6px 0 16px}
+  .specs{list-style:none;border-top:1px solid var(--line)}
+  .specs li{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .specs .k{color:var(--mute)}
+  .specs .v{font-weight:600;text-align:right}
+  .specs .v small{display:block;font-weight:500;color:var(--mute);font-size:11.5px;margin-top:2px}
+
+  .note{font-size:12.5px;color:var(--mute);line-height:1.6;max-width:70ch;margin:8px 0 4px}
+  .cta{margin:34px 0 8px;background:var(--ink);color:#fff;border-radius:22px;padding:clamp(26px,4vw,40px);
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
+  .cta h2{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(20px,2.6vw,28px);letter-spacing:-.01em;color:#fff}
+  .cta p{color:#B7C2CC;font-size:14.5px;margin-top:6px}
+  .btn{display:inline-flex;align-items:center;gap:9px;background:var(--ev);color:#fff;font-family:"Space Grotesk",sans-serif;font-weight:600;
+    font-size:15px;padding:14px 26px;border-radius:100px;transition:.25s;white-space:nowrap}
+  .btn:hover{background:#0B6070;box-shadow:0 12px 30px rgba(14,116,144,.35)}
+  footer{padding:40px 0 60px;color:var(--mute);font-size:13px;text-align:center}
+  footer a{color:var(--ev);font-weight:600}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a href="/" class="brand"><span class="dot"></span>IBS</a>
+  <a href="/" class="back">← Volver al inicio</a>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="eyebrow">Fichas técnicas</span>
+    <h1>Especificaciones de la flota</h1>
+    <p class="lede">Unidades eléctricas BPS y de combustión Shineray distribuidas por IBS en el occidente de México. Datos técnicos por modelo, lado a lado.</p>
+    <div class="filters">
+      <button class="pill" data-f="all" aria-pressed="true">Todos</button>
+      <button class="pill" data-f="ev" aria-pressed="false">Eléctricos · BPS</button>
+      <button class="pill" data-f="ice" aria-pressed="false">Combustión · Shineray</button>
+    </div>
+  </section>
+
+  <section class="grid" id="grid">
+    <!-- ELÉCTRICOS -->
+    <article class="card" data-brand="ev">
+      <div class="figure"><span class="tag ev">BPS · Eléctrico</span><img src="assets/v2.png" alt="BPS V2"></div>
+      <div class="body">
+        <div class="name">V2</div><div class="cat">Ligero eléctrico · Chasis / Caja / Plataforma</div>
+        <ul class="specs">
+          <li><span class="k">Carga útil</span><span class="v">700 kg</span></li>
+          <li><span class="k">Potencia</span><span class="v">30 kW · síncrono</span></li>
+          <li><span class="k">Autonomía</span><span class="v">115–140 km est.*<small>150–180 km CLTC</small></span></li>
+          <li><span class="k">Carga (batería)</span><span class="v">AC 5–7 h · DC 45 min</span></li>
+          <li><span class="k">Batería</span><span class="v">LFP · 17.88 kWh</span></li>
+          <li><span class="k">Dimensiones</span><span class="v">3.49 × 1.47 × 1.69 m</span></li>
+          <li><span class="k">Vel. máxima</span><span class="v">80 km/h</span></li>
+          <li><span class="k">Garantía</span><span class="v">Por confirmar</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="card" data-brand="ev">
+      <div class="figure"><span class="tag ev">BPS · Eléctrico</span><img src="assets/1500.png" alt="BPS 1500"></div>
+      <div class="body">
+        <div class="name">1500</div><div class="cat">Carga eléctrica · Chasis / Caja / Plataforma</div>
+        <ul class="specs">
+          <li><span class="k">Carga útil</span><span class="v">650–730 kg</span></li>
+          <li><span class="k">Potencia</span><span class="v">20 kW · síncrono</span></li>
+          <li><span class="k">Autonomía</span><span class="v">130–155 km est.*<small>170–200 km CLTC</small></span></li>
+          <li><span class="k">Carga (batería)</span><span class="v">AC 6–8 h</span></li>
+          <li><span class="k">Batería</span><span class="v">LFP · 20.72 kWh</span></li>
+          <li><span class="k">Dimensiones</span><span class="v">4.20 × 1.57 × 1.69 m</span></li>
+          <li><span class="k">Vel. máxima</span><span class="v">77 km/h</span></li>
+          <li><span class="k">Garantía</span><span class="v">Por confirmar</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="card" data-brand="ev">
+      <div class="figure"><span class="tag ev">BPS · Eléctrico</span><img src="assets/x7.png" alt="BPS X7"></div>
+      <div class="body">
+        <div class="name">X7</div><div class="cat">Mediano eléctrico · Chasis / Caja / Plataforma</div>
+        <ul class="specs">
+          <li><span class="k">Carga útil</span><span class="v">850–1,110 kg</span></li>
+          <li><span class="k">Potencia</span><span class="v">60 kW · síncrono</span></li>
+          <li><span class="k">Autonomía</span><span class="v">130–175 km est.*<small>170–230 km CLTC</small></span></li>
+          <li><span class="k">Carga (batería)</span><span class="v">AC 8–10 h · DC 45–60 min</span></li>
+          <li><span class="k">Batería</span><span class="v">LFP · 28.8 kWh</span></li>
+          <li><span class="k">Dimensiones</span><span class="v">4.40 × 1.57 × 2.40 m</span></li>
+          <li><span class="k">Vel. máxima</span><span class="v">85 km/h</span></li>
+          <li><span class="k">Garantía</span><span class="v">Por confirmar</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="card" data-brand="ev">
+      <div class="figure"><span class="tag ev">BPS · Eléctrico</span><img src="assets/maxence.png" alt="BPS Maxence"></div>
+      <div class="body">
+        <div class="name">Maxence</div><div class="cat">Pesado eléctrico · Caja / Plataforma / Chasis</div>
+        <ul class="specs">
+          <li><span class="k">Carga útil</span><span class="v">1,550 kg</span></li>
+          <li><span class="k">Potencia</span><span class="v">60 kW · síncrono</span></li>
+          <li><span class="k">Autonomía</span><span class="v">185–210 km est.*<small>240–270 km CLTC</small></span></li>
+          <li><span class="k">Carga (batería)</span><span class="v">AC 14 h · DC 1 h 30 min</span></li>
+          <li><span class="k">Batería</span><span class="v">LFP · 41.86 kWh</span></li>
+          <li><span class="k">Dimensiones</span><span class="v">4.86 × 1.75 × 1.99 m</span></li>
+          <li><span class="k">Vel. máxima</span><span class="v">100 km/h</span></li>
+          <li><span class="k">Garantía</span><span class="v">Por confirmar</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- COMBUSTIÓN -->
+    <article class="card" data-brand="ice">
+      <div class="figure"><span class="tag ice">Shineray · Combustión</span><img src="assets/shineray/t50.png" alt="Shineray T50"></div>
+      <div class="body">
+        <div class="name">T50</div><div class="cat">Truck · Caja de carga</div>
+        <ul class="specs">
+          <li><span class="k">Carga útil</span><span class="v">2,370 kg</span></li>
+          <li><span class="k">Motor</span><span class="v">Gasolina 1.6 L</span></li>
+          <li><span class="k">Rendimiento</span><span class="v">13.03 km/L</span></li>
+          <li><span class="k">Transmisión</span><span class="v">Manual · 5 vel</span></li>
+          <li><span class="k">Garantía</span><span class="v">3 años</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="card" data-brand="ice">
+      <div class="figure"><span class="tag ice">Shineray · Combustión</span><img src="assets/shineray/t30.png" alt="Shineray T30"></div>
+      <div class="body">
+        <div class="name">T30</div><div class="cat">Mini Truck · Caja de carga</div>
+        <ul class="specs">
+          <li><span class="k">Carga útil</span><span class="v">1,475 kg</span></li>
+          <li><span class="k">Motor</span><span class="v">Gasolina 1.6 L</span></li>
+          <li><span class="k">Rendimiento</span><span class="v">13.23 km/L</span></li>
+          <li><span class="k">Transmisión</span><span class="v">Manual · 5 vel</span></li>
+          <li><span class="k">Garantía</span><span class="v">3 años</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="card" data-brand="ice">
+      <div class="figure"><span class="tag ice">Shineray · Combustión</span><img src="assets/shineray/t32.png" alt="Shineray T32"></div>
+      <div class="body">
+        <div class="name">T32</div><div class="cat">Mini Truck · Caja de carga</div>
+        <ul class="specs">
+          <li><span class="k">Carga útil</span><span class="v">1,200 kg</span></li>
+          <li><span class="k">Motor</span><span class="v">Gasolina 1.5 L</span></li>
+          <li><span class="k">Rendimiento</span><span class="v">Por confirmar</span></li>
+          <li><span class="k">Transmisión</span><span class="v">Manual · 5 vel</span></li>
+          <li><span class="k">Garantía</span><span class="v">3 años</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="card" data-brand="ice">
+      <div class="figure"><span class="tag ice">Shineray · Combustión</span><img src="assets/shineray/x30.png" alt="Shineray X30"></div>
+      <div class="body">
+        <div class="name">X30</div><div class="cat">Cargo Van · Van cerrada</div>
+        <ul class="specs">
+          <li><span class="k">Carga útil</span><span class="v">910 kg</span></li>
+          <li><span class="k">Motor</span><span class="v">Gasolina 1.5 L</span></li>
+          <li><span class="k">Rendimiento</span><span class="v">15.63 km/L</span></li>
+          <li><span class="k">Transmisión</span><span class="v">Manual · 5 vel</span></li>
+          <li><span class="k">Garantía</span><span class="v">3 años</span></li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <p class="note">* Autonomía estimada en operación real (carga, clima y conducción). CLTC es el ciclo de homologación oficial y suele ser mayor que el rango real. Dimensiones en largo × ancho × alto. Datos sujetos a cambio sin previo aviso; confirma la versión y equipamiento con tu asesor IBS.</p>
+
+  <div class="cta">
+    <div>
+      <h2>¿Necesitas la ficha en PDF?</h2>
+      <p>Te enviamos la ficha técnica completa del modelo que te interese.</p>
+    </div>
+    <a class="btn" href="mailto:hola@ibluesky.ai?subject=Solicitud%20de%20ficha%20t%C3%A9cnica%20IBS">Solicitar ficha →</a>
+  </div>
+</main>
+
+<footer><div class="wrap">IBS · Innovación Blue Sky — Tepic · Vallarta · Guadalajara · <a href="/">ibluesky.ai</a></div></footer>
+
+<script>
+  var pills=document.querySelectorAll('.pill'), cards=document.querySelectorAll('.card');
+  pills.forEach(function(p){p.addEventListener('click',function(){
+    var f=p.getAttribute('data-f');
+    pills.forEach(function(x){x.setAttribute('aria-pressed', x===p?'true':'false');});
+    cards.forEach(function(c){
+      c.classList.toggle('hide', f!=='all' && c.getAttribute('data-brand')!==f);
+    });
+  });});
+</script>
+</body>
+</html>
